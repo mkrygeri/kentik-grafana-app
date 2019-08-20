@@ -1,13 +1,14 @@
 import * as _ from 'lodash';
 import angular from 'angular';
 import { getRegion } from './regionHelper';
+import { showAlert } from '../datasource/alertHelper';
 
 export class KentikAPI {
   baseUrl: string;
   apiReady: boolean;
   region?: string;
   /** @ngInject */
-  constructor(public backendSrv: any) {
+  constructor(public backendSrv: any, public $http: any) {
     this.apiReady = false;
     this.baseUrl = '/api/plugin-proxy/kentik-app';
   }
@@ -34,8 +35,7 @@ export class KentikAPI {
   }
 
   async getUsers() {
-    const data = await this._get('/api/v5/users');
-    return data;
+    return this._get('/api/v5/users');
   }
 
   getFieldValues(field: string) {
@@ -74,19 +74,17 @@ export class KentikAPI {
       await this._getRegionFromDatasource();
     }
 
-    return this.backendSrv
-      .datasourceRequest({
+    try {
+      const resp = await this.$http({
         method: 'GET',
         url: this.baseUrl + '/' + this.region + url,
-      })
-      .catch(error => {
-        console.error(error);
-        if (error.err) {
-          return Promise.reject(error.err);
-        } else {
-          return Promise.reject(error);
-        }
       });
+
+      return resp;
+    } catch (e) {
+      showAlert(e);
+      throw e;
+    }
   }
 
   private async _post(url: string, data: any) {
@@ -94,27 +92,26 @@ export class KentikAPI {
       await this._getRegionFromDatasource();
     }
 
-    return this.backendSrv
-      .datasourceRequest({
+    try {
+      const resp = await this.$http({
         method: 'POST',
         url: this.baseUrl + '/' + this.region + url,
         data: data,
-      })
-      .then(response => {
-        if (response.data) {
-          return response.data;
-        } else {
-          return [];
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        if (error.err) {
-          return Promise.reject(error.err);
-        } else {
-          return Promise.reject(error);
-        }
       });
+
+      if (resp.data) {
+        return resp.data;
+      } else {
+        return [];
+      }
+    } catch(error) {
+      console.error(error);
+      if (error.err) {
+        throw error.err;
+      } else {
+        throw error;
+      }
+    }
   }
 }
 

@@ -5,16 +5,16 @@ import { showAlert, showCustomAlert } from '../datasource/alertHelper';
 import * as _ from 'lodash';
 
 class KentikConfigCtrl {
+  apiValidated = false;
+  apiError = false;
   appEditCtrl: any;
   appModel: any;
-  apiValidated: boolean;
-  apiError: boolean;
   kentik: KentikAPI;
   static template: any;
   regionTypes = [{ value: 'default', text: 'US (default)' }, { value: 'eu', text: 'EU' }, { value: 'custom', text: 'Custom' }];
 
   /** @ngInject */
-  constructor($scope, $injector, public backendSrv: any) {
+  constructor(public $scope, $injector, $http, public backendSrv: any) {
     this.appEditCtrl.setPreUpdateHook(this.preUpdate.bind(this));
     this.appEditCtrl.setPostUpdateHook(this.postUpdate.bind(this));
 
@@ -27,9 +27,7 @@ class KentikConfigCtrl {
     if (typeof this.appModel.jsonData.region === 'undefined') {
       this.appModel.jsonData.region = 'default';
     }
-    this.apiValidated = false;
-    this.apiError = false;
-    this.kentik = new KentikAPI(this.backendSrv);
+    this.kentik = new KentikAPI(this.backendSrv, $http);
     this.kentik.setRegion(this.appModel.jsonData.region);
     if (this.appModel.enabled && this.appModel.jsonData.tokenSet) {
       this.validateApiConnection();
@@ -50,7 +48,6 @@ class KentikConfigCtrl {
     }
 
     await this.validateApiConnection();
-    await this.appEditCtrl.importDashboards();
 
     return {
       url: 'dashboard/db/kentik-home',
@@ -73,10 +70,10 @@ class KentikConfigCtrl {
         this.apiError = true;
       }
     } catch (e) {
-      showAlert(e);
       this.apiValidated = false;
       this.apiError = true;
     }
+    this.$scope.$digest();
   }
 
   reset() {

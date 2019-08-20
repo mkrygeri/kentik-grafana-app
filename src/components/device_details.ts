@@ -12,7 +12,7 @@ export class DeviceDetailsCtrl {
   region = '';
 
   /** @ngInject */
-  constructor($scope, $injector, public $location: any, public backendSrv: any, public alertSrv: any) {
+  constructor($scope, $injector, $http, public $location: any, public backendSrv: any, public alertSrv: any) {
     this.device = {};
     this.deviceDTO = {};
     this.pageReady = false;
@@ -20,7 +20,7 @@ export class DeviceDetailsCtrl {
     //this.region = "default";
     backendSrv.get('/api/datasources').then((allDS: any) => {
       this.region = getRegion(allDS);
-      this.kentik = new KentikAPI(this.backendSrv);
+      this.kentik = new KentikAPI(this.backendSrv, $http);
       this.kentik.setRegion(this.region);
       this.getDevice($location.search().device);
     });
