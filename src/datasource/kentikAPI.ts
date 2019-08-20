@@ -81,9 +81,13 @@ export class KentikAPI {
       });
 
       return resp;
-    } catch (e) {
-      showAlert(e);
-      throw e;
+    } catch (error) {
+      showAlert(error);
+      if (error.err) {
+        throw error.err;
+      } else {
+        throw error;
+      }
     }
   }
 
@@ -105,7 +109,7 @@ export class KentikAPI {
         return [];
       }
     } catch(error) {
-      console.error(error);
+      showAlert(error);
       if (error.err) {
         throw error.err;
       } else {
