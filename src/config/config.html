@@ -41,7 +41,7 @@
       <div ng-if="ctrl.appModel.jsonData.tokenSet" class="gf-form">
         <input type="text" class="gf-form-input max-width-20" disabled="disabled" value="saved" />
         <div ng-if="ctrl.appModel.enabled">
-          <i class="fa fa-exclamation-triangle" ng-if="!ctrl.apiValidated" alt="Could not validate api Token."></i>
+          <i class="fa fa-exclamation-triangle" ng-if="ctrl.apiError" bs-tooltip="'Could not validate api Token.'"></i>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<div ng-if="ctrl.appModel.jsonData.tokenSet" class="kentik-enabled-box">
+<div ng-if="ctrl.appModel.jsonData.tokenSet && ctrl.apiValidated" class="kentik-enabled-box">
   <i class="icon-gf icon-gf-check icon-gf-check kentik-icon-success"></i> Successfully enabled. <strong>Next up:
   </strong><a href="dashboard/db/kentik-home" class="external-link">Go to Kentik Home Dashboard</a>
 </div>

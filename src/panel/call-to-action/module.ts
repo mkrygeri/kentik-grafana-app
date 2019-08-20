@@ -22,7 +22,7 @@ class CallToActiontCtrl extends PanelCtrl {
   region = '';
 
   /** @ngInject */
-  constructor($scope, $injector, public backendSrv: any, private datasourceSrv) {
+  constructor($scope, $injector, $http, public backendSrv: any, private datasourceSrv) {
     super($scope, $injector);
     _.defaults(this.panel, panelDefaults);
     this.deviceStatus = '';
@@ -33,7 +33,7 @@ class CallToActiontCtrl extends PanelCtrl {
       .get('/api/datasources')
       .then((allDS: any) => {
         this.region = getRegion(allDS);
-        this.kentik = new KentikAPI(this.backendSrv);
+        this.kentik = new KentikAPI(this.backendSrv, $http);
         this.kentik.setRegion(this.region);
       })
       .then(async () => {

@@ -24,7 +24,7 @@ class DeviceListCtrl extends PanelCtrl {
   region = '';
 
   /** @ngInject */
-  constructor($scope, $injector, public $location: any, public backendSrv: any) {
+  constructor($scope, $injector, $http, public $location: any, public backendSrv: any) {
     super($scope, $injector);
     _.defaults(this.panel, panelDefaults);
     this.devices = [];
@@ -35,7 +35,7 @@ class DeviceListCtrl extends PanelCtrl {
       .get('/api/datasources')
       .then((allDS: any) => {
         this.region = getRegion(allDS);
-        this.kentik = new KentikAPI(this.backendSrv);
+        this.kentik = new KentikAPI(this.backendSrv, $http);
         this.kentik.setRegion(this.region);
       })
       .then(async () => {
