@@ -157,6 +157,15 @@ class KentikDatasource {
     });
   }
 
+  getMetricValueByName(name: string): string {
+    const metric = _.find(metricList, { text: name });
+    if(metric === undefined) {
+      throw new Error(`Unknown metric name: ${name}`);
+    }
+
+    return metric.value;
+  }
+
   async getTagKeys() {
     const initialList = await this._getExtendedDimensionsList(filterFieldList);
     const savedFilters = await this.kentik.getSavedFilters();
