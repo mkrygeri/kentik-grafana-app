@@ -160,7 +160,7 @@ class KentikDatasource {
     });
   }
 
-  findMetric(query: { text?: string, value: string }): Metric | null {
+  findMetric(query: { text?: string, value?: string }): Metric | null {
     const metric = _.find(metricList, query);
     if(metric === undefined) {
       return null;
@@ -169,7 +169,7 @@ class KentikDatasource {
     return metric;
   }
 
-  findUnit(query: { text?: string, value: string }): Unit | null {
+  findUnit(query: { text?: string, value?: string }): Unit | null {
     const unit = _.find(unitList, query);
     if(unit === undefined) {
       return null;
