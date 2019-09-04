@@ -1,4 +1,16 @@
-const metricList = [
+export type Metric = { text: string, value: string, field: string };
+export type Unit = {
+  text: string,
+  value: string,
+  field: string,
+  outsort: string,
+  gfUnit: string,
+  gfAxisLabel: string,
+  transform?: Function,
+  tableFields: { text: string, field: string, unit: string, transform?: Function }[]
+};
+
+export const metricList: Metric[] = [
   { text: 'Traffic', value: 'Traffic', field: 'traffic' },
   { text: 'TopFlow', value: 'TopFlow', field: 'TopFlow' },
   { text: 'Top flow IP', value: 'TopFlowsIP', field: 'TopFlowsIP' },
@@ -66,7 +78,7 @@ function totalToBitsPerSecond(value, row, rangeSeconds) {
   return (value * 8) / rangeSeconds;
 }
 
-const unitList = [
+export const unitList: Unit[] = [
   {
     text: 'Bits/s',
     value: 'bytes',
@@ -87,7 +99,7 @@ const unitList = [
     field: 'f_sum_both_pkts',
     outsort: 'avg_both',
     gfUnit: 'pps',
-    gfAxislabel: 'Packets/s',
+    gfAxisLabel: 'Packets/s',
     transform: toPerSecondRate,
     tableFields: [
       { text: 'Avg', field: 'avg_both', unit: 'pps', transform: totalToAvgPerSecond },
@@ -127,7 +139,7 @@ const unitList = [
   },
 ];
 
-const filterFieldList = [
+export const filterFieldList = [
   { text: 'Source City', field: 'src_geo_city' },
   { text: 'Source Region', field: 'src_geo_region' },
   { text: 'Source Country', field: 'src_geo' },
@@ -190,5 +202,3 @@ const filterFieldList = [
   { text: 'Per-flow packets (recorded outbound)', field: 'out_pkts' },
   { text: 'Per-flow bytes (recorded outbound)', field: 'out_bytes' },
 ];
-
-export { metricList, unitList, filterFieldList };

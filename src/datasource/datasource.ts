@@ -1,4 +1,7 @@
-import { metricList, unitList, filterFieldList } from './metric_def';
+import {
+  metricList, unitList, filterFieldList,
+  Metric, Unit
+} from './metric_def';
 import * as _ from 'lodash';
 import './kentikProxy';
 import TableModel from 'grafana/app/core/table_model';
@@ -157,22 +160,22 @@ class KentikDatasource {
     });
   }
 
-  getMetricValueByName(name: string): string {
-    const metric = _.find(metricList, { text: name });
+  findMetric(query: { text?: string, value: string }): Metric | null {
+    const metric = _.find(metricList, query);
     if(metric === undefined) {
-      throw new Error(`Unknown metric name: ${name}`);
+      return null;
     }
 
-    return metric.value;
+    return metric;
   }
 
-  getUnitValueByName(name: string): string {
-    const unit = _.find(unitList, { text: name });
+  findUnit(query: { text?: string, value: string }): Unit | null {
+    const unit = _.find(unitList, query);
     if(unit === undefined) {
-      throw new Error(`Unknown unit name: ${name}`);
+      return null;
     }
 
-    return unit.value;
+    return unit;
   }
 
   async getTagKeys() {

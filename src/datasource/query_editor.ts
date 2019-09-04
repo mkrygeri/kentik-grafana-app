@@ -16,9 +16,33 @@ class KentikQueryCtrl extends QueryCtrl {
 
     this.queryModes = [{ value: 'graph', text: 'Graph' }, { value: 'table', text: 'Table' }];
 
-    this.metricSegment = this.uiSegmentSrv.newSegment({ value: 'select metric', fake: true });
-    this.deviceSegment = this.uiSegmentSrv.newSegment({ value: 'select device', fake: true });
-    this.unitSegment = this.uiSegmentSrv.newSegment({ value: 'select unit', fake: true });
+    if(this.target.metric === undefined) {
+      this.metricSegment = this.uiSegmentSrv.newSegment({ value: 'select metric', fake: true });
+    } else {
+      const metric = this.datasource.findMetric({ value: this.target.metric });
+      if(metric !== null) {
+        this.metricSegment = this.uiSegmentSrv.newSegment({ value: metric.text });
+      } else {
+        this.metricSegment = this.uiSegmentSrv.newSegment({ value: this.target.metric });
+      }
+    }
+
+    if(this.target.device === undefined) {
+      this.deviceSegment = this.uiSegmentSrv.newSegment({ value: 'select device', fake: true });
+    } else {
+      this.deviceSegment = this.uiSegmentSrv.newSegment({ value: this.target.device });
+    }
+
+    if(this.target.unit === undefined) {
+      this.unitSegment = this.uiSegmentSrv.newSegment({ value: 'select unit', fake: true });
+    } else {
+      const unit = this.datasource.findUnit({ value: this.target.unit });
+      if(unit !== null) {
+        this.unitSegment = this.uiSegmentSrv.newSegment({ value: unit.text });
+      } else {
+        this.unitSegment = this.uiSegmentSrv.newSegment({ value: this.target.unit });
+      }
+    }
   }
 
   async getMetrics() {
@@ -40,11 +64,11 @@ class KentikQueryCtrl extends QueryCtrl {
   }
 
   async onMetricChange() {
-    const isVariable = this.metricSegment.value.indexOf('$') === 0;
-    if(isVariable) {
-      this.target.metric = this.metricSegment.value;
+    const metric = await this.datasource.findMetric({ text: this.metricSegment.value });
+    if(metric !== null) {
+      this.target.metric = metric.value;
     } else {
-      this.target.metric = await this.datasource.getMetricValueByName(this.metricSegment.value);
+      this.target.metric = this.metricSegment.value;
     }
 
     this.panelCtrl.refresh();
@@ -57,11 +81,11 @@ class KentikQueryCtrl extends QueryCtrl {
   }
 
   async onUnitChange() {
-    const isVariable = this.unitSegment.value.indexOf('$') === 0;
-    if(isVariable) {
-      this.target.unit = this.unitSegment.value;
+    const unit = await this.datasource.findUnit({ text: this.unitSegment.value });
+    if(unit !== null) {
+      this.target.unit = unit.value;
     } else {
-      this.target.unit = await this.datasource.getUnitValueByName(this.unitSegment.value);
+      this.target.unit = this.unitSegment.value;
     }
 
     this.panelCtrl.refresh();
