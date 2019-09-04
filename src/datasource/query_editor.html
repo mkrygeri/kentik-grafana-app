@@ -2,7 +2,11 @@
 	<div class="gf-form-inline">
 		<div class="gf-form">
 			<label class="gf-form-label width-7">Device</label>
-			<input type="text" class="gf-form-input width-11" ng-model="ctrl.target.device"></input>
+			<metric-segment
+        segment="ctrl.deviceSegment"
+        get-options="ctrl.getDevices($query)"
+        on-change="ctrl.onDeviceChange()"
+      ></metric-segment>
 		</div>
 		<div class="gf-form">
 			<label class="gf-form-label width-7">Metric</label>
