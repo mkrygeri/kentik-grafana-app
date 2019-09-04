@@ -166,6 +166,15 @@ class KentikDatasource {
     return metric.value;
   }
 
+  getUnitValueByName(name: string): string {
+    const unit = _.find(unitList, { text: name });
+    if(unit === undefined) {
+      throw new Error(`Unknown unit name: ${name}`);
+    }
+
+    return unit.value;
+  }
+
   async getTagKeys() {
     const initialList = await this._getExtendedDimensionsList(filterFieldList);
     const savedFilters = await this.kentik.getSavedFilters();

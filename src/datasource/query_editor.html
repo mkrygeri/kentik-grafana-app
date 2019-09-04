@@ -25,7 +25,12 @@
 	<div class="gf-form-inline">
 		<div class="gf-form">
 			<label class="gf-form-label width-7">Unit</label>
-			<input type="text" class="gf-form-input width-11" ng-model="ctrl.target.unit"></input>
+			<metric-segment
+        class="width-11"
+        segment="ctrl.unitSegment"
+        get-options="ctrl.getUnits($query)"
+        on-change="ctrl.onUnitChange()"
+      ></metric-segment>
 		</div>
 		<div class="gf-form">
 			<label class="gf-form-label width-7">Data mode</label>
