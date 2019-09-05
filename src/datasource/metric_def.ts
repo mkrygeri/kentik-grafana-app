@@ -1,13 +1,13 @@
-export type Metric = { text: string, value: string, field: string };
+export type Metric = { text: string; value: string; field: string };
 export type Unit = {
-  text: string,
-  value: string,
-  field: string,
-  outsort: string,
-  gfUnit: string,
-  gfAxisLabel: string,
-  transform?: Function,
-  tableFields: { text: string, field: string, unit: string, transform?: Function }[]
+  text: string;
+  value: string;
+  field: string;
+  outsort: string;
+  gfUnit: string;
+  gfAxisLabel: string;
+  transform?: Function;
+  tableFields: Array<{ text: string; field: string; unit: string; transform?: Function }>;
 };
 
 export const metricList: Metric[] = [

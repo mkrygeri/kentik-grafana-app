@@ -108,7 +108,7 @@ export class KentikAPI {
       } else {
         return [];
       }
-    } catch(error) {
+    } catch (error) {
       showAlert(error);
       if (error.err) {
         throw error.err;
