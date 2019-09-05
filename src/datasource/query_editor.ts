@@ -1,14 +1,15 @@
 import { QueryCtrl } from 'grafana/app/plugins/sdk';
+import { UiSegmentSrv, MetricSegment } from 'grafana/app/core/services/segment_srv';
 
 class KentikQueryCtrl extends QueryCtrl {
   static templateUrl: string;
-  queryModes: any[];
-  metricSegment: any;
-  deviceSegment: any;
-  unitSegment: any;
+  queryModes: Array<{ value: string; text: string }>;
+  metricSegment: MetricSegment;
+  deviceSegment: MetricSegment;
+  unitSegment: MetricSegment;
 
   /** @ngInject */
-  constructor($scope, $injector, public uiSegmentSrv) {
+  constructor($scope, $injector, public uiSegmentSrv: UiSegmentSrv) {
     super($scope, $injector);
 
     this.target.mode = this.target.mode || 'graph';
@@ -44,25 +45,26 @@ class KentikQueryCtrl extends QueryCtrl {
     }
   }
 
-  async getMetrics() {
+  async getMetrics(): Promise<MetricSegment[]> {
+    console.log('it works')
     const metrics = await this.datasource.metricFindQuery('metrics()');
 
     return this.uiSegmentSrv.transformToSegments(true)(metrics);
   }
 
-  async getDevices() {
+  async getDevices(): Promise<MetricSegment[]> {
     const devices = await this.datasource.metricFindQuery('devices()');
 
     return this.uiSegmentSrv.transformToSegments(true)(devices);
   }
 
-  async getUnits() {
+  async getUnits(): Promise<MetricSegment[]> {
     const units = await this.datasource.metricFindQuery('units()');
 
     return this.uiSegmentSrv.transformToSegments(true)(units);
   }
 
-  async onMetricChange() {
+  async onMetricChange(): Promise<void> {
     const metric = await this.datasource.findMetric({ text: this.metricSegment.value });
     if (metric !== null) {
       this.target.metric = metric.value;
@@ -73,13 +75,13 @@ class KentikQueryCtrl extends QueryCtrl {
     this.panelCtrl.refresh();
   }
 
-  async onDeviceChange() {
+  async onDeviceChange(): Promise<void> {
     this.target.device = this.deviceSegment.value;
 
     this.panelCtrl.refresh();
   }
 
-  async onUnitChange() {
+  async onUnitChange(): Promise<void> {
     const unit = await this.datasource.findUnit({ text: this.unitSegment.value });
     if (unit !== null) {
       this.target.unit = unit.value;

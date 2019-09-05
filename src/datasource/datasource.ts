@@ -1,8 +1,10 @@
-import { metricList, unitList, filterFieldList, Metric, Unit } from './metric_def';
-import * as _ from 'lodash';
 import './kentikProxy';
-import TableModel from 'grafana/app/core/table_model';
+import { metricList, unitList, filterFieldList, Metric, Unit } from './metric_def';
 import queryBuilder from './query_builder';
+
+import TableModel from 'grafana/app/core/table_model';
+
+import * as _ from 'lodash';
 
 class KentikDatasource {
   name: string;
