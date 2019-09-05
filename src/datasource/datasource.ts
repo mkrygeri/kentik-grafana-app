@@ -160,6 +160,9 @@ class KentikDatasource {
   }
 
   findMetric(query: { text?: string; value?: string }): Metric | null {
+    if (query.text === undefined && query.value === undefined) {
+      throw new Error('At least one of text / value must be defined');
+    }
     const metric = _.find(metricList, query);
     if (metric === undefined) {
       return null;
@@ -169,6 +172,9 @@ class KentikDatasource {
   }
 
   findUnit(query: { text?: string; value?: string }): Unit | null {
+    if (query.text === undefined && query.value === undefined) {
+      throw new Error('At least one of text / value must be defined');
+    }
     const unit = _.find(unitList, query);
     if (unit === undefined) {
       return null;

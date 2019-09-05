@@ -46,7 +46,6 @@ class KentikQueryCtrl extends QueryCtrl {
   }
 
   async getMetrics(): Promise<MetricSegment[]> {
-    console.log('it works')
     const metrics = await this.datasource.metricFindQuery('metrics()');
 
     return this.uiSegmentSrv.transformToSegments(true)(metrics);
