@@ -2,8 +2,6 @@ import { QueryCtrl } from 'grafana/app/plugins/sdk';
 import { UiSegmentSrv, MetricSegment } from 'grafana/app/core/services/segment_srv';
 import { TemplateSrv } from 'grafana/app/features/templating/template_srv';
 
-import * as _ from 'lodash';
-
 class KentikQueryCtrl extends QueryCtrl {
   static templateUrl: string;
   queryModes: Array<{ value: string; text: string }>;
@@ -51,7 +49,7 @@ class KentikQueryCtrl extends QueryCtrl {
   async getMetricSegments(query: string, variableName?: string, addTemplateVars = false): Promise<MetricSegment[]> {
     let metrics = await this.datasource.metricFindQuery(query);
     if (this.templateSrv.variableExists(variableName)) {
-      metrics = _.concat({ text: variableName }, metrics);
+      metrics = [{ text: variableName }, ...metrics];
     }
 
     return this.uiSegmentSrv.transformToSegments(addTemplateVars)(metrics);
