@@ -1,5 +1,8 @@
 import { QueryCtrl } from 'grafana/app/plugins/sdk';
 import { UiSegmentSrv, MetricSegment } from 'grafana/app/core/services/segment_srv';
+import { TemplateSrv } from 'grafana/app/features/templating/template_srv';
+
+import * as _ from 'lodash';
 
 class KentikQueryCtrl extends QueryCtrl {
   static templateUrl: string;
@@ -9,7 +12,7 @@ class KentikQueryCtrl extends QueryCtrl {
   unitSegment: MetricSegment;
 
   /** @ngInject */
-  constructor($scope, $injector, public uiSegmentSrv: UiSegmentSrv) {
+  constructor($scope, $injector, public templateSrv: TemplateSrv, public uiSegmentSrv: UiSegmentSrv) {
     super($scope, $injector);
 
     this.target.mode = this.target.mode || 'graph';
@@ -45,22 +48,25 @@ class KentikQueryCtrl extends QueryCtrl {
     }
   }
 
-  async getMetrics(): Promise<MetricSegment[]> {
-    const metrics = await this.datasource.metricFindQuery('metrics()');
+  async getMetricSegments(query: string, variableName?: string, addTemplateVars = false): Promise<MetricSegment[]> {
+    let metrics = await this.datasource.metricFindQuery(query);
+    if (this.templateSrv.variableExists(variableName)) {
+      metrics = _.concat({ text: variableName }, metrics);
+    }
 
-    return this.uiSegmentSrv.transformToSegments(true)(metrics);
+    return this.uiSegmentSrv.transformToSegments(addTemplateVars)(metrics);
+  }
+
+  async getMetrics(): Promise<MetricSegment[]> {
+    return this.getMetricSegments('metrics()', '$metric');
   }
 
   async getDevices(): Promise<MetricSegment[]> {
-    const devices = await this.datasource.metricFindQuery('devices()');
-
-    return this.uiSegmentSrv.transformToSegments(true)(devices);
+    return this.getMetricSegments('devices()', '$device');
   }
 
   async getUnits(): Promise<MetricSegment[]> {
-    const units = await this.datasource.metricFindQuery('units()');
-
-    return this.uiSegmentSrv.transformToSegments(true)(units);
+    return this.getMetricSegments('units()', '$unit');
   }
 
   async onMetricChange(): Promise<void> {
