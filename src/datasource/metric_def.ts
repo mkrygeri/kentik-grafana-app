@@ -1,4 +1,18 @@
-const metricList = [
+export type TransformFunction = (value: number, row: any, rangeSeconds: number) => number;
+export type Metric = { text: string; value: string; field: string };
+export type Unit = {
+  text: string;
+  value: string;
+  field: string;
+  outsort: string;
+  gfUnit: string;
+  gfAxisLabel: string;
+  transform?: TransformFunction;
+  tableFields: Array<{ text: string; field: string; unit: string; transform?: TransformFunction }>;
+};
+export type FilterField = { text: string; field: string };
+
+export const metricList: Metric[] = [
   { text: 'Traffic', value: 'Traffic', field: 'traffic' },
   { text: 'TopFlow', value: 'TopFlow', field: 'TopFlow' },
   { text: 'Top flow IP', value: 'TopFlowsIP', field: 'TopFlowsIP' },
@@ -50,23 +64,23 @@ const metricList = [
   { text: 'Region Top Talkers', value: 'RegionTopTalkers', field: 'RegionTopTalkers' },
 ];
 
-function toBitsPerSecond(value, row) {
+function toBitsPerSecond(value: number, row: any): number {
   return (value * 8) / row.i_duration;
 }
 
-function toPerSecondRate(value, row) {
+function toPerSecondRate(value: number, row: any): number {
   return value / row.i_duration;
 }
 
-function totalToAvgPerSecond(value, row, rangeSeconds) {
+function totalToAvgPerSecond(value: number, row, rangeSeconds: number): number {
   return value / rangeSeconds;
 }
 
-function totalToBitsPerSecond(value, row, rangeSeconds) {
+function totalToBitsPerSecond(value: number, row, rangeSeconds: number): number {
   return (value * 8) / rangeSeconds;
 }
 
-const unitList = [
+export const unitList: Unit[] = [
   {
     text: 'Bits/s',
     value: 'bytes',
@@ -87,7 +101,7 @@ const unitList = [
     field: 'f_sum_both_pkts',
     outsort: 'avg_both',
     gfUnit: 'pps',
-    gfAxislabel: 'Packets/s',
+    gfAxisLabel: 'Packets/s',
     transform: toPerSecondRate,
     tableFields: [
       { text: 'Avg', field: 'avg_both', unit: 'pps', transform: totalToAvgPerSecond },
@@ -127,7 +141,7 @@ const unitList = [
   },
 ];
 
-const filterFieldList = [
+export const filterFieldList: FilterField[] = [
   { text: 'Source City', field: 'src_geo_city' },
   { text: 'Source Region', field: 'src_geo_region' },
   { text: 'Source Country', field: 'src_geo' },
@@ -190,5 +204,3 @@ const filterFieldList = [
   { text: 'Per-flow packets (recorded outbound)', field: 'out_pkts' },
   { text: 'Per-flow bytes (recorded outbound)', field: 'out_bytes' },
 ];
-
-export { metricList, unitList, filterFieldList };

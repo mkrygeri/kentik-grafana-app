@@ -1,8 +1,10 @@
-import { metricList, unitList, filterFieldList } from './metric_def';
-import * as _ from 'lodash';
 import './kentikProxy';
-import TableModel from 'grafana/app/core/table_model';
+import { metricList, unitList, filterFieldList, Metric, Unit } from './metric_def';
 import queryBuilder from './query_builder';
+
+import TableModel from 'grafana/app/core/table_model';
+
+import * as _ from 'lodash';
 
 class KentikDatasource {
   name: string;
@@ -155,6 +157,30 @@ class KentikDatasource {
         return { text: device.device_name, value: device.device_name };
       });
     });
+  }
+
+  findMetric(query: { text?: string; value?: string }): Metric | null {
+    if (query.text === undefined && query.value === undefined) {
+      throw new Error('At least one of text / value must be defined');
+    }
+    const metric = _.find(metricList, query);
+    if (metric === undefined) {
+      return null;
+    }
+
+    return metric;
+  }
+
+  findUnit(query: { text?: string; value?: string }): Unit | null {
+    if (query.text === undefined && query.value === undefined) {
+      throw new Error('At least one of text / value must be defined');
+    }
+    const unit = _.find(unitList, query);
+    if (unit === undefined) {
+      return null;
+    }
+
+    return unit;
   }
 
   async getTagKeys() {
