@@ -1,8 +1,11 @@
 import angular from 'angular';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+
+import { showAlert } from './alertHelper';
 import './kentikAPI';
 import { getRegion } from './regionHelper';
+
 
 function getUTCTimestamp() {
   const ts = new Date();
@@ -48,6 +51,7 @@ export class KentikProxy {
   }
 
   invokeTopXDataQuery(query: any) {
+    query.hostname_lookup = this.hostnameLookupToBoolean(query.hostname_lookup);
     const cachedQuery = _.cloneDeep(query);
     const hash = getHash(cachedQuery);
 
@@ -55,6 +59,15 @@ export class KentikProxy {
       // Invoke query
       return this.kentikAPI.invokeTopXDataQuery(query).then(result => {
         const timestamp = getUTCTimestamp();
+
+        if (query.hostname_lookup) {
+          const resultData = result.results[0].data;
+          resultData.forEach(row => {
+            if(row.lookup !== undefined) {
+              row.key = row.lookup;
+            }
+          });
+        }
 
         this.cache[hash] = {
           timestamp: timestamp,
@@ -144,6 +157,10 @@ export class KentikProxy {
       values.push(populator.value);
       return values;
     }, []);
+  }
+
+  private hostnameLookupToBoolean(choice: string): boolean {
+    return choice === 'enabled' ? true : false;
   }
 }
 

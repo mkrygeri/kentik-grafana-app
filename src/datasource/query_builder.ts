@@ -119,6 +119,7 @@ function buildTopXdataQuery(options) {
     aggregates: formatAggs(unitDef),
     filters_obj: formatFilters(options.kentikFilterGroups),
     saved_filters: options.kentikSavedFilters,
+    hostname_lookup: options.hostnameLookup,
   };
 
   return query;
