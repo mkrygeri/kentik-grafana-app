@@ -22,3 +22,77 @@ Kentik Connect also allows you to edit the configuration of devices (which must 
 
 - A Kentik account and API key is required to Enable the Kentik app. If you don’t have a Kentik account, [sign up for your Free Trial Now](https://portal.kentik.com/signup.html?ref=signup_2nd&utm_source=grafana&utm_medium=landingpage&utm_term=portal&utm_campaign=grafana-signup).
 - To appear in the Kentik Connect device list, devices must first be registered with Kentik Detect.
+
+## Plugin installation
+
+The easiest way to install plugins is by using the `grafana-cli` tool which is bundled with Grafana. See [Using grafana-cli](#using-grafana-cli) paragraph.
+
+If there is no `grafana-cli` tool in your system, plugins can be installed [manually](#manual-installation).
+
+### Table of contents
+- [Using grafana-cli](#using-grafana-cli)
+  - [Install plugin](#install-plugin)
+  - [Update plugin](#update-plugin)
+- [Manual installation](#manual-installation)
+- [Docker installation](#docker-installation)
+
+### Using grafana-cli
+
+Grafana docs about plugin installation: https://grafana.com/docs/plugins/installation/#installing-plugins.
+
+#### Install plugin
+```bash
+grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/download/v1.3.5/kentik-app-1.3.5.zip" plugins install kentik-app
+sudo systemctl restart grafana-server
+```
+
+#### Update plugin
+
+```bash
+grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/download/v1.3.5/kentik-app-1.3.5.zip" plugins update kentik-app
+sudo systemctl restart grafana-server
+```
+
+### Manual installation
+
+- Navigate to Grafana plugins directory:
+  - For Grafana installed from `.deb`/`.rpm` package:
+    - `/var/lib/grafana/plugins`
+  - For Grafana installed using Standalone Linux Binaries or source:
+    - `<GRAFANA_PATH>/data/plugins`
+
+- Download kentik-app
+```bash
+wget https://github.com/kentik/kentik-grafana-app/releases/download/v1.3.5/kentik-app-1.3.5.tar.gz
+```
+
+- Remove old kentik-app (if it exists)
+```bash
+rm -rf kentik-app
+```
+
+- Unpack downloaded files
+```bash
+tar -zxvf kentik-app-1.3.5.tar.gz
+```
+
+- Restart Grafana
+  - For Grafana installed from `.deb`/`.rpm` package:
+    - `systemctl restart grafana-server`
+  - For Grafana installed using Standalone Linux Binaries or source:
+    - Stop any running instances of grafana-server
+    - Start grafana-server: `cd <GRAFANA_PATH> && ./bin/grafana-server`
+
+### Docker installation
+
+You can install Kentik App to Grafana in Docker passing it as the environment variable.
+
+```bash
+docker run \
+  -p 3000:3000 \
+  -e "GF_INSTALL_PLUGINS=https://github.com/kentik/kentik-grafana-app/releases/download/v1.3.5/kentik-app-1.3.5.zip;kentik-grafana-app" \
+  grafana/grafana
+```
+
+#### Useful links
+- Grafana docs about Docker installation: https://docs.grafana.org/installation/docker/#installing-plugins-from-other-sources
