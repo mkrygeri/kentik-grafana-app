@@ -1,6 +1,16 @@
+import * as _ from 'lodash';
+
 import { QueryCtrl } from 'grafana/app/plugins/sdk';
 import { UiSegmentSrv, MetricSegment } from 'grafana/app/core/services/segment_srv';
 import { TemplateSrv } from 'grafana/app/features/templating/template_srv';
+
+import { showAlert } from './alertHelper';
+
+const HOSTNAME_LOOKUP_TEMPLATE_VAR = '$dns_lookup';
+const HOSTNAME_LOOKUP_CHOICES = [
+  'enabled',
+  'disabled'
+]
 
 class KentikQueryCtrl extends QueryCtrl {
   static templateUrl: string;
@@ -8,6 +18,7 @@ class KentikQueryCtrl extends QueryCtrl {
   metricSegment: MetricSegment;
   deviceSegment: MetricSegment;
   unitSegment: MetricSegment;
+  hostnameLookup: MetricSegment;
 
   /** @ngInject */
   constructor($scope, $injector, public templateSrv: TemplateSrv, public uiSegmentSrv: UiSegmentSrv) {
@@ -44,6 +55,13 @@ class KentikQueryCtrl extends QueryCtrl {
         this.unitSegment = this.uiSegmentSrv.newSegment({ value: this.target.unit });
       }
     }
+
+    if (this.target.hostnameLookup === undefined) {
+      this.target.hostnameLookup = HOSTNAME_LOOKUP_TEMPLATE_VAR;
+      this.hostnameLookup = this.uiSegmentSrv.newSegment({ value: HOSTNAME_LOOKUP_TEMPLATE_VAR });
+    } else {
+      this.hostnameLookup = this.hostnameLookup = this.uiSegmentSrv.newSegment({ value: this.target.hostnameLookup });
+    }
   }
 
   async getMetricSegments(query: string, variableName?: string, addTemplateVars = false): Promise<MetricSegment[]> {
@@ -65,6 +83,17 @@ class KentikQueryCtrl extends QueryCtrl {
 
   async getUnits(): Promise<MetricSegment[]> {
     return this.getMetricSegments('units()', '$unit');
+  }
+
+  async getHostnameLookupOptionValues(): Promise<MetricSegment[]> {
+    let choises = HOSTNAME_LOOKUP_CHOICES;
+    if (this.templateSrv.variableExists(HOSTNAME_LOOKUP_TEMPLATE_VAR)) {
+      choises = [HOSTNAME_LOOKUP_TEMPLATE_VAR, ...choises];
+    }
+
+    return this.uiSegmentSrv.transformToSegments(false)(choises.map(c => {
+      return { text: c };
+    }) as any[]);
   }
 
   async onMetricChange(): Promise<void> {
@@ -93,6 +122,20 @@ class KentikQueryCtrl extends QueryCtrl {
     }
 
     this.panelCtrl.refresh();
+  }
+
+  async onHostnameLookupChange(): Promise<void> {
+    const choices = HOSTNAME_LOOKUP_CHOICES;
+    if ([HOSTNAME_LOOKUP_TEMPLATE_VAR, ...choices].includes(this.hostnameLookup.value)) {
+      this.target.hostnameLookup = this.hostnameLookup.value;
+      this.panelCtrl.refresh();
+    } else {
+      if(!choices.includes(this.hostnameLookup.value)) {
+        showAlert(
+          `${this.hostnameLookup.value} isn't valid hostname lookup value. Use one of ${['enable', 'disable']}`
+        );
+      }
+    }
   }
 }
 

@@ -52,6 +52,7 @@ class KentikDatasource {
       unit: this.templateSrv.replace(target.unit),
       kentikFilterGroups: kentikFilterGroups.kentikFilters,
       kentikSavedFilters: kentikFilterGroups.savedFilters,
+      hostnameLookup: this.templateSrv.replace(target.hostnameLookup),
     };
     const query = queryBuilder.buildTopXdataQuery(queryOptions);
 

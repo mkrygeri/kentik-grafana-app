@@ -60,7 +60,8 @@
               "mode": "graph",
               "refId": "A",
               "target": "",
-              "unit": "$unit"
+              "unit": "$unit",
+              "hostnameLookup": "$dns_lookup"
             }
           ],
           "timeFrom": null,
@@ -142,7 +143,8 @@
               "mode": "table",
               "refId": "A",
               "target": "",
-              "unit": "$unit"
+              "unit": "$unit",
+              "hostnameLookup": "$dns_lookup"
             }
           ],
           "title": "",
@@ -181,6 +183,34 @@
   },
   "templating": {
     "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "disable",
+          "value": "disable"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "DNS Lookup",
+        "multi": false,
+        "name": "dns_lookup",
+        "options": [
+          {
+            "selected": false,
+            "text": "enabled",
+            "value": "enabled"
+          },
+          {
+            "selected": true,
+            "text": "disabled",
+            "value": "disabled"
+          }
+        ],
+        "query": "enable,disable",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
       {
         "current": {
           "tags": [],
