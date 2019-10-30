@@ -27,9 +27,9 @@ class DeviceListCtrl extends PanelCtrl {
 
   /** @ngInject */
   constructor(
-    $scope: ng.IScope,
+    public $scope: ng.IScope,
     $injector: ng.auto.IInjectorService,
-    $http: ng.IHttpService,
+    public $http: ng.IHttpService,
     public $location: ng.ILocationService,
     public backendSrv: BackendSrv
   ) {
@@ -38,30 +38,30 @@ class DeviceListCtrl extends PanelCtrl {
     this.devices = [];
     this.pageReady = false;
     // get region from datasource
-    //this.region = "default";
-    backendSrv
-      .get('/api/datasources')
-      .then((allDS: any) => {
-        this.region = getRegion(allDS);
-        this.kentik = new KentikAPI(this.backendSrv, $http);
-        this.kentik.setRegion(this.region);
-      })
-      .then(async () => {
-        await this.getDevices();
-      });
+    this.initRegion();
   }
 
-  async getDevices() {
+  async initRegion(): Promise<void> {
+    const datasources = await this.backendSrv.get('/api/datasources');
+    this.region = getRegion(datasources);
+    this.kentik = new KentikAPI(this.backendSrv, this.$http);
+    this.kentik.setRegion(this.region);
+    await this.fetchDevices();
+  }
+
+  async fetchDevices() {
     try {
       this.devices = await this.kentik.getDevices();
+
       this.pageReady = true;
+      this.$scope.$apply();
     } catch (e) {
       showAlert(e);
     }
   }
 
   refresh() {
-    this.getDevices();
+    this.fetchDevices();
   }
 
   gotoDashboard(device: any) {
