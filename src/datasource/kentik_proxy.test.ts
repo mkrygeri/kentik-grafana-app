@@ -67,6 +67,5 @@ function getKentikProxyInstance(ctx: any, data: any) {
   };
 
   ctx.kentikAPI = new KentikAPI(ctx.backendSrv, ctx.$http);
-  ctx.kentikAPI.setRegion('default');
   ctx.kentikProxy = new KentikProxy(ctx.kentikAPI);
 }

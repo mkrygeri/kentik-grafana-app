@@ -1,6 +1,5 @@
 import { KentikAPI } from '../../datasource/kentik_api';
 import { showAlert } from '../../datasource/alert_helper';
-import { getRegion } from '../../datasource/region_helper';
 
 import { PanelCtrl } from 'grafana/app/plugins/sdk';
 import { loadPluginCss } from 'grafana/app/plugins/sdk';
@@ -23,7 +22,6 @@ class DeviceListCtrl extends PanelCtrl {
   devices: any[];
   pageReady: boolean;
   kentik: KentikAPI = {} as KentikAPI;
-  region = '';
 
   /** @ngInject */
   constructor(
@@ -37,16 +35,9 @@ class DeviceListCtrl extends PanelCtrl {
     _.defaults(this.panel, panelDefaults);
     this.devices = [];
     this.pageReady = false;
-    // get region from datasource
-    this.initRegion();
-  }
 
-  async initRegion(): Promise<void> {
-    const datasources = await this.backendSrv.get('/api/datasources');
-    this.region = getRegion(datasources);
     this.kentik = new KentikAPI(this.backendSrv, this.$http);
-    this.kentik.setRegion(this.region);
-    await this.fetchDevices();
+    this.fetchDevices();
   }
 
   async fetchDevices() {

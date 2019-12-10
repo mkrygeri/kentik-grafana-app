@@ -42,7 +42,6 @@ class KentikConfigCtrl {
       this.appModel.jsonData.region = Region.DEFAULT;
     }
     this.kentik = new KentikAPI(this.backendSrv, $http);
-    this.kentik.setRegion(this.appModel.jsonData.region);
     if (this.appModel.enabled && this.appModel.jsonData.tokenSet) {
       this.validateApiConnection();
     }
