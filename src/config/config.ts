@@ -7,6 +7,13 @@ import { BackendSrv } from 'grafana/app/core/services/backend_srv';
 
 import * as _ from 'lodash';
 
+
+enum Region {
+  DEFAULT = 'default',
+  EU = 'eu',
+  CUSTOM = 'custom'
+}
+
 class KentikConfigCtrl {
   apiValidated = false;
   apiError = false;
@@ -14,7 +21,11 @@ class KentikConfigCtrl {
   appModel: any;
   kentik: KentikAPI;
   static template: any;
-  regionTypes = [{ value: 'default', text: 'US (default)' }, { value: 'eu', text: 'EU' }, { value: 'custom', text: 'Custom' }];
+  regionTypes = [
+    { value: Region.DEFAULT, text: 'US (default)' },
+    { value: Region.EU, text: 'EU' },
+    { value: Region.CUSTOM, text: 'Custom' }
+  ];
 
   /** @ngInject */
   constructor(public $scope: ng.IScope, $http: ng.IHttpService, public backendSrv: BackendSrv) {
@@ -27,8 +38,8 @@ class KentikConfigCtrl {
     if (!this.appModel.secureJsonData) {
       this.appModel.secureJsonData = {};
     }
-    if (typeof this.appModel.jsonData.region === 'undefined') {
-      this.appModel.jsonData.region = 'default';
+    if (this.appModel.jsonData.region === undefined) {
+      this.appModel.jsonData.region = Region.DEFAULT;
     }
     this.kentik = new KentikAPI(this.backendSrv, $http);
     this.kentik.setRegion(this.appModel.jsonData.region);
@@ -82,7 +93,7 @@ class KentikConfigCtrl {
   reset() {
     this.appModel.jsonData.email = '';
     this.appModel.jsonData.tokenSet = false;
-    this.appModel.jsonData.region = 'default';
+    this.appModel.jsonData.region = Region.DEFAULT;
     this.appModel.jsonData.dynamicUrl = '';
     this.appModel.secureJsonData = {};
     this.apiValidated = false;
@@ -112,6 +123,7 @@ class KentikConfigCtrl {
     });
     const promisesResults: any[] = [];
     if (!foundKentikDS || updateKentikDS) {
+      this.appModel.jsonData.url = this._getUrlByRegion(this.appModel.jsonData.region);
       // create datasource
       const kentik = {
         name: 'kentik',
@@ -127,6 +139,19 @@ class KentikConfigCtrl {
       }
     }
     return promisesResults;
+  }
+
+  private _getUrlByRegion(region: Region): string {
+    switch (region) {
+      case Region.DEFAULT:
+        return 'https://grafana-api.kentik.com/api/v5';
+      case Region.EU:
+        return 'https://api.kentik.eu/api/v5';
+      case Region.CUSTOM:
+        return this.appModel.jsonData.dynamicUrl;
+      default:
+        throw new Error(`Unknown region type: "${region}"`);
+    }
   }
 }
 

@@ -5,45 +5,9 @@
 
   "routes": [
     {
-      "path": "default/api/v5/*",
+      "path": "api/v5/*",
       "method": "*",
-      "url": "https://grafana-api.kentik.com/api/v5",
-      "headers": [
-        {"name": "X-CH-Auth-API-Token", "content": "{{.SecureJsonData.token}}"},
-        {"name": "X-CH-Auth-Email", "content": "{{.JsonData.email}}"}
-      ]
-    },
-    {
-      "path": "custom/api/v5/*",
-      "method": "*",
-      "url": "{{.JsonData.dynamicUrl}}",
-      "headers": [
-        {"name": "X-CH-Auth-API-Token", "content": "{{.SecureJsonData.token}}"},
-        {"name": "X-CH-Auth-Email", "content": "{{.JsonData.email}}"}
-      ]
-    },
-    {
-      "path": "eu/api/v5/*",
-      "method": "*",
-      "url": "https://api.kentik.eu/api/v5/",
-      "headers": [
-        {"name": "X-CH-Auth-API-Token", "content": "{{.SecureJsonData.token}}"},
-        {"name": "X-CH-Auth-Email", "content": "{{.JsonData.email}}"}
-      ]
-    },
-    {
-      "path": "default/api/v4/*",
-      "method": "*",
-      "url": "https://grafanav4api.kentik.com/api/v4/",
-      "headers": [
-        {"name": "X-CH-Auth-API-Token", "content": "{{.SecureJsonData.token}}"},
-        {"name": "X-CH-Auth-Email", "content": "{{.JsonData.email}}"}
-      ]
-    },
-    {
-      "path": "default/api/v1/*",
-      "method": "*",
-      "url": "https://grafanav1api.kentik.com/api/v1",
+      "url": "{{.JsonData.url}}",
       "headers": [
         {"name": "X-CH-Auth-API-Token", "content": "{{.SecureJsonData.token}}"},
         {"name": "X-CH-Auth-Email", "content": "{{.JsonData.email}}"}

@@ -81,7 +81,7 @@ export class KentikAPI {
     try {
       const resp = await this.$http({
         method: 'GET',
-        url: this.baseUrl + '/' + this.region + url,
+        url: this.baseUrl + url,
       });
 
       return resp;
@@ -103,7 +103,7 @@ export class KentikAPI {
     try {
       const resp = await this.$http({
         method: 'POST',
-        url: this.baseUrl + '/' + this.region + url,
+        url: this.baseUrl + url,
         data: data,
       });
 
