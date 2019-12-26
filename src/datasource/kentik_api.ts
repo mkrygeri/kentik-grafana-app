@@ -1,4 +1,3 @@
-import { getRegion } from './region_helper';
 import { showAlert } from '../datasource/alert_helper';
 
 import { BackendSrv } from 'grafana/app/core/services/backend_srv';
@@ -9,23 +8,9 @@ import angular from 'angular';
 
 export class KentikAPI {
   baseUrl: string;
-  apiReady: boolean;
-  region?: string;
   /** @ngInject */
   constructor(public backendSrv: BackendSrv, public $http: ng.IHttpService) {
-    this.apiReady = false;
     this.baseUrl = '/api/plugin-proxy/kentik-app';
-  }
-
-  private async _getRegionFromDatasource(): Promise<void> {
-    const allDatasources = await this.backendSrv.get('/api/datasources');
-
-    this.region = getRegion(allDatasources);
-    this.apiReady = true;
-  }
-
-  setRegion(region: string): void {
-    this.region = region;
   }
 
   async getDevices(): Promise<any> {
@@ -74,14 +59,10 @@ export class KentikAPI {
   }
 
   private async _get(url: string): Promise<any> {
-    if (this.region === undefined) {
-      await this._getRegionFromDatasource();
-    }
-
     try {
       const resp = await this.$http({
         method: 'GET',
-        url: this.baseUrl + '/' + this.region + url,
+        url: this.baseUrl + url,
       });
 
       return resp;
@@ -96,14 +77,10 @@ export class KentikAPI {
   }
 
   private async _post(url: string, data: any): Promise<any> {
-    if (this.region === undefined) {
-      await this._getRegionFromDatasource();
-    }
-
     try {
       const resp = await this.$http({
         method: 'POST',
-        url: this.baseUrl + '/' + this.region + url,
+        url: this.baseUrl + url,
         data: data,
       });
 

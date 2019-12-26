@@ -1,9 +1,8 @@
+import { BackendSrv } from 'grafana/app/core/services/backend_srv';
+
 import * as _ from 'lodash';
 import angular from 'angular';
 
-import { BackendSrv } from 'grafana/app/core/services/backend_srv';
-
-import { getRegion } from '../datasource/region_helper';
 
 const defaults = {
   device_name: '',
@@ -22,19 +21,11 @@ export class AddDeviceCtrl {
   static templateUrl: string;
   device: any;
   sendingIps: any[];
-  region = '';
 
   /** @ngInject */
   constructor(public $location: ng.ILocationService, public backendSrv: BackendSrv, public alertSrv: any) {
     this.device = angular.copy(defaults);
     this.sendingIps = [{ ip: '' }];
-    // get region from datasource
-    this.initRegion();
-  }
-
-  async initRegion(): Promise<void> {
-    const datasources = await this.backendSrv.get('/api/datasources');
-    this.region = getRegion(datasources);
   }
 
   addIP() {
@@ -51,7 +42,7 @@ export class AddDeviceCtrl {
       ips.push(ip.ip);
     });
     this.device.sending_ips = ips.join();
-    const resp = await this.backendSrv.post(`/api/plugin-proxy/kentik-app/${this.region}/api/v5/device`, this.device);
+    const resp = await this.backendSrv.post(`/api/plugin-proxy/kentik-app/api/v5/device`, this.device);
     if ('err' in resp) {
       this.alertSrv.set('Device Add failed.', resp.err, 'error');
       throw new Error(`Device Add failed: ${resp.err}`);

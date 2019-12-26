@@ -1,9 +1,9 @@
 import { KentikAPI } from '../datasource/kentik_api';
 import { showCustomAlert } from '../datasource/alert_helper';
-import { getRegion } from '../datasource/region_helper';
 
 import { BackendSrv } from 'grafana/app/core/services/backend_srv';
 import { AlertSrv } from 'grafana/app/core/services/alert_srv';
+
 
 export class DeviceDetailsCtrl {
   static templateUrl: string;
@@ -12,7 +12,6 @@ export class DeviceDetailsCtrl {
   pageReady: boolean;
   otherIps: any;
   kentik: KentikAPI = {} as KentikAPI;
-  region = '';
 
   /** @ngInject */
   constructor(
@@ -25,18 +24,10 @@ export class DeviceDetailsCtrl {
     this.device = {};
     this.deviceDTO = {};
     this.pageReady = false;
-    // get region from datasource
-    this.initRegion();
-  }
 
-  async initRegion(): Promise<void> {
-    const datasources = await this.backendSrv.get('/api/datasources');
-    this.region = getRegion(datasources);
     this.kentik = new KentikAPI(this.backendSrv, this.$http);
-    this.kentik.setRegion(this.region);
-    await this.fetchDevice(this.$location.search().device);
+    this.fetchDevice(this.$location.search().device);
   }
-
 
   addIP() {
     this.otherIps.push({ ip: '' });
@@ -48,7 +39,7 @@ export class DeviceDetailsCtrl {
 
   async fetchDevice(deviceId: string): Promise<void> {
     const resp = await this.backendSrv.get(
-      `/api/plugin-proxy/kentik-app/${this.region}/api/v5/device/${deviceId}`
+      `/api/plugin-proxy/kentik-app/api/v5/device/${deviceId}`
     );
     this.device = resp.device;
     this.updateDeviceDTO();
@@ -90,7 +81,7 @@ export class DeviceDetailsCtrl {
 
     try {
       const resp = await this.backendSrv.put(
-        `/api/plugin-proxy/kentik-app/${this.region}/api/v5/device/${this.deviceDTO.device_id}`,
+        `/api/plugin-proxy/kentik-app/api/v5/device/${this.deviceDTO.device_id}`,
         data
       );
       if ('err' in resp) {
