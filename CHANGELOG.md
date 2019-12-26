@@ -4,13 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.0] - 2019-12-26
 
-### Bug fixes
+### Breaking changes
 
-- "Permission denied" error for Viewers and Editors [#28](https://github.com/kentik/kentik-grafana-app/pull/28)
-
-> Please note: this release requires additional actions to make the plugin work after update:
->- restart Grafana
->- go to the plugin config (e.g. http://localhost:3000/plugins/kentik-app/) and click "Update"
+- Fix "Permission denied" error for Viewers and Editors [#28](https://github.com/kentik/kentik-grafana-app/pull/28). It requires additional actions to make the plugin work after update:
+  - restart Grafana
+  - go to the plugin config (e.g. http://localhost:3000/plugins/kentik-app/) and click "Update"
 
 ## [1.3.6] - 2019-10-02
 
