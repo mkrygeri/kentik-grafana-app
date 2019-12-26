@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Breaking changes
 
-- Fix "Permission denied" error for Viewers and Editors [#28](https://github.com/kentik/kentik-grafana-app/pull/28). It requires additional actions to make the plugin work after update:
+Fix "Permission denied" error for Viewers and Editors [#28](https://github.com/kentik/kentik-grafana-app/pull/28). It requires additional actions to make the plugin work after update:
   - restart Grafana
   - go to the plugin config (e.g. http://localhost:3000/plugins/kentik-app/) and click "Update"
 
