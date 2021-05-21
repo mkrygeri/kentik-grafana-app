@@ -40,16 +40,9 @@ If there is no `grafana-cli` tool in your system, plugins can be installed [manu
 
 Grafana docs about plugin installation: https://grafana.com/docs/plugins/installation/#installing-plugins.
 
-#### Install plugin
+#### Install / update plugin
 ```bash
 grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/download/v1.4.2/kentik-app-1.4.2.zip" plugins install kentik-app
-sudo systemctl restart grafana-server
-```
-
-#### Update plugin
-
-```bash
-grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/download/v1.4.2/kentik-app-1.4.2.zip" plugins update kentik-app
 sudo systemctl restart grafana-server
 ```
 
