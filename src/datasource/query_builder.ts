@@ -127,15 +127,25 @@ function buildTopXdataQuery(options: any) {
   return query;
 }
 
-function convertToKentikFilter(filterObj: any, filterDef: any) {
+function convertToKentikFilter(filterObj: any, filterDef: FilterField) {
+  let kentikOperator = filterObj.operator;
+
+  // some filters don't support `=` operator
+  // so we use `ILIKE` instead
+  if (filterDef.unequatable) {
+    if (kentikOperator === '=') {
+      kentikOperator = 'ILIKE';
+    }
+  }
+
   // Use Kentik 'not equal' style
-  if (filterObj.operator === '!=') {
-    filterObj.operator = '<>';
+  if (kentikOperator === '!=') {
+    kentikOperator = '<>';
   }
 
   return {
     filterField: filterDef.field,
-    operator: filterObj.operator,
+    operator: kentikOperator,
     filterValue: filterObj.value,
   };
 }
