@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2] - 2021-05-21
+
+### Fixed
+
+- Filter field "inet_dst_addr" does not support the operator "=" error [#36](https://github.com/kentik/kentik-grafana-app/pull/36)
+
+### Changed
+- Remove old unsupported filters
+
 ## [1.4.1] - 2020-09-25
 
 ### Fixed
