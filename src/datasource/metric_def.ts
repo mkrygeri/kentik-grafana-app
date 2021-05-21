@@ -10,7 +10,7 @@ export type Unit = {
   transform?: TransformFunction;
   tableFields: Array<{ text: string; field: string; unit: string; transform?: TransformFunction }>;
 };
-export type FilterField = { text: string; field: string, unsupportedEqualityOperator?: boolean };
+export type FilterField = { text: string; field: string, unequatable?: boolean };
 
 export const metricList: Metric[] = [
   { text: 'Traffic', value: 'Traffic', field: 'traffic' },
@@ -146,11 +146,11 @@ export const filterFieldList: FilterField[] = [
   { text: 'Source Region', field: 'src_geo_region' },
   { text: 'Source Country', field: 'src_geo' },
   { text: 'Source AS Number', field: 'src_as' },
-  { text: 'Source Flow Tag', field: 'src_flow_tags', unsupportedEqualityOperator: true },
+  { text: 'Source Flow Tag', field: 'src_flow_tags', unequatable: true },
   { text: 'Source IP Port', field: 'l4_src_port' },
   { text: 'Source MAC Address', field: 'src_eth_mac' },
   { text: 'Source VLAN', field: 'vlan_in' },
-  { text: 'Source IP Address', field: 'inet_src_addr', unsupportedEqualityOperator: true },
+  { text: 'Source IP Address', field: 'inet_src_addr', unequatable: true },
   { text: 'Source Interface ID', field: 'input_port' },
   { text: 'Source Interface Name', field: 'i_input_interface_description' },
   { text: 'Source Interface Description', field: 'i_input_snmp_alias' },
@@ -164,11 +164,11 @@ export const filterFieldList: FilterField[] = [
   { text: 'Destination Region', field: 'dst_geo_region' },
   { text: 'Destination Country', field: 'dst_geo' },
   { text: 'Destination AS Number', field: 'dst_as' },
-  { text: 'Destination Flow Tag', field: 'dst_flow_tags', unsupportedEqualityOperator: true },
+  { text: 'Destination Flow Tag', field: 'dst_flow_tags', unequatable: true },
   { text: 'Destination IP Port', field: 'l4_dst_port' },
   { text: 'Destination MAC Address', field: 'dst_eth_mac' },
   { text: 'Destination VLAN', field: 'vlan_out' },
-  { text: 'Destination IP Address', field: 'inet_dst_addr', unsupportedEqualityOperator: true },
+  { text: 'Destination IP Address', field: 'inet_dst_addr', unequatable: true },
   { text: 'Destination Interface ID', field: 'output_port' },
   { text: 'Destination Interface Name', field: 'i_output_interface_description' },
   { text: 'Destination Interface Description', field: 'i_output_snmp_alias' },

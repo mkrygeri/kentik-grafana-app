@@ -132,7 +132,7 @@ function convertToKentikFilter(filterObj: any, filterDef: FilterField) {
 
   // some filters don't support `=` operator
   // so we use `ILIKE` instead
-  if (filterDef.unsupportedEqualityOperator) {
+  if (filterDef.unequatable) {
     if (kentikOperator === '=') {
       kentikOperator = 'ILIKE';
     }
