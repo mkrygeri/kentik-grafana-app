@@ -19,5 +19,8 @@
     "noUnusedLocals": true,
     "baseUrl": "./src",
     "strict": true
-  }
+  },
+  "include": [
+    "src"
+  ]
 }
