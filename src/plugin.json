@@ -83,6 +83,7 @@
   ],
 
   "dependencies": {
+    "grafanaDependency": ">=6.1.0",
     "grafanaVersion": "6.1.x"
   }
 }

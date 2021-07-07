@@ -41,22 +41,20 @@ jobs:
             # create zip file
             cd ~
             echo "Creating ZIP"
+            cp -r ${PLUGIN_NAME}/dist/ ./tmp/${PLUGIN_NAME}
+            cd tmp/
             zip \
-              -x ${PLUGIN_NAME}/.git/**\* \
-              -x ${PLUGIN_NAME}/node_modules/**\* \
-              -r /tmp/${PLUGIN_NAME}-${VERSION}.zip \
+              -r ${PLUGIN_NAME}-${VERSION}.zip \
               ${PLUGIN_NAME}
             # create tar file
             echo "Creating TAR"
             tar \
-              --exclude .git \
-              --exclude node_modules \
-              -zcvf /tmp/${PLUGIN_NAME}-${VERSION}.tar.gz \
+              -zcvf ${PLUGIN_NAME}-${VERSION}.tar.gz \
               ${PLUGIN_NAME}
             # create artifacts
             mkdir -p ~/${PLUGIN_NAME}/artifacts
-            mv /tmp/${PLUGIN_NAME}-${VERSION}.zip ~/${PLUGIN_NAME}/artifacts/
-            mv /tmp/${PLUGIN_NAME}-${VERSION}.tar.gz ~/${PLUGIN_NAME}/artifacts/
+            mv ${PLUGIN_NAME}-${VERSION}.zip ~/${PLUGIN_NAME}/artifacts/
+            mv ${PLUGIN_NAME}-${VERSION}.tar.gz ~/${PLUGIN_NAME}/artifacts/
           no_output_timeout: 5m
       - save_cache:
           name: Save NPM Package Cache
