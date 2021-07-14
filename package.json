@@ -1,5 +1,5 @@
 {
-  "name": "kentik-app",
+  "name": "kentik-grafana-app",
   "private": true,
   "version": "1.4.2",
   "description": "",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grafana/kentik-app.git"
+    "url": "git+https://github.com/kentik/kentik-grafana-app.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/grafana/kentik-app/issues"
+    "url": "https://github.com/kentik/kentik-grafana-app/issues"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
