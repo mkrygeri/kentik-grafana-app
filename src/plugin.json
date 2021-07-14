@@ -1,7 +1,7 @@
 {
   "type": "app",
   "name": "Kentik Connect Pro",
-  "id": "kentik-app",
+  "id": "kentik-connect-app",
 
   "routes": [
     {
