@@ -21,7 +21,7 @@
             "span": 7.5,
             "height": "415px",
             "title": "",
-            "type": "kentik-device-list"
+            "type": "kentik-devicelist-panel"
           },
           {
             "content": "",
@@ -42,7 +42,7 @@
             "id": 1,
             "span": 4,
             "title": "",
-            "type": "kentik-call-to-action"
+            "type": "kentik-calltoaction-panel"
           },
           {
             "content": "",

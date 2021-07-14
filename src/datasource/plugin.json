@@ -1,7 +1,7 @@
 {
   "type": "datasource",
   "name": "Kentik DS",
-  "id": "kentik-ds",
+  "id": "kentik-connect-datasource",
 
   "metrics": true
 }

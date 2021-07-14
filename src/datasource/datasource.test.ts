@@ -45,7 +45,7 @@ function createDatasourceInstance(ctx: any, data: any) {
     get: () => {
       return Promise.resolve([
         {
-          type: 'kentik-ds',
+          type: 'kentik-connect-datasource',
           jsonData: {
             region: 'default',
           },

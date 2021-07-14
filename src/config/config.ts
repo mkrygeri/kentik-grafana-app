@@ -115,7 +115,7 @@ class KentikConfigCtrl {
     let dsID = NaN;
     _.forEach(results, ds => {
       // use the type
-      if (ds.type === 'kentik-ds') {
+      if (ds.type === 'kentik-connect-datasource') {
         foundKentikDS = true;
         dsID = ds.id;
         updateKentikDS = true;
@@ -135,7 +135,7 @@ class KentikConfigCtrl {
       // create datasource
       const kentik = {
         name: 'kentik',
-        type: 'kentik-ds',
+        type: 'kentik-connect-datasource',
         access: 'proxy',
         jsonData: this.appModel.jsonData,
       };

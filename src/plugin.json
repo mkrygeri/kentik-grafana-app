@@ -78,7 +78,7 @@
     },
     {
       "type": "datasource",
-      "name": "Kentik-ds"
+      "name": "Kentik Datasource"
     }
   ],
 
