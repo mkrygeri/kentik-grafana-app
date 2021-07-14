@@ -17,11 +17,11 @@ aliases:
       only: master
 
 defaults: &defaults
-  working_directory: ~/kentik-app
+  working_directory: ~/kentik-grafana-app
   docker:
     - image: circleci/node:10.15.3-stretch
   environment:
-    PLUGIN_NAME: kentik-app
+    PLUGIN_NAME: kentik-grafana-app
 
 jobs:
   build:
@@ -41,8 +41,8 @@ jobs:
             # create zip file
             cd ~
             echo "Creating ZIP"
-            cp -r ${PLUGIN_NAME}/dist/ ./tmp/${PLUGIN_NAME}
-            cd tmp/
+            cp -r ${PLUGIN_NAME}/dist/ /tmp/${PLUGIN_NAME}
+            cd /tmp
             zip \
               -r ${PLUGIN_NAME}-${VERSION}.zip \
               ${PLUGIN_NAME}
