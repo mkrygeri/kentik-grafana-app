@@ -115,15 +115,16 @@ class KentikConfigCtrl {
     let dsID = NaN;
     _.forEach(results, ds => {
       // use the type
-      if (ds.type === 'kentik-connect-datasource') {
+      if (ds.type === 'kentik-connect-datasource' || ds.type === 'kentik-ds') {
         foundKentikDS = true;
         dsID = ds.id;
         updateKentikDS = true;
 
-        if (ds.jsonData.region !== this.appModel.jsonData.region) {
-          updateKentikDS = true;
-        }
-        if (ds.jsonData !== this.appModel.jsonData) {
+        if (
+          ds.type === 'kentik-ds' ||
+          ds.jsonData.region !== this.appModel.jsonData.region ||
+          ds.jsonData !== this.appModel.jsonData
+        ) {
           updateKentikDS = true;
         }
         return;
