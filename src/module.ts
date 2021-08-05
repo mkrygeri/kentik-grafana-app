@@ -8,8 +8,8 @@ import { AddDeviceCtrl } from './components/add_device';
 import { loadPluginCss } from 'grafana/app/plugins/sdk';
 
 loadPluginCss({
-  dark: 'plugins/kentik-app/styles/dark.css',
-  light: 'plugins/kentik-app/styles/light.css',
+  dark: 'plugins/kentik-connect-app/styles/dark.css',
+  light: 'plugins/kentik-connect-app/styles/light.css',
 });
 
 export { DeviceListCtrl, DeviceDetailsCtrl, AddDeviceCtrl, ConfigCtrl };

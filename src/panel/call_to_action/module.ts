@@ -8,8 +8,8 @@ import * as _ from 'lodash';
 
 
 loadPluginCss({
-  dark: 'plugins/kentik-app/styles/dark.css',
-  light: 'plugins/kentik-app/styles/light.css',
+  dark: 'plugins/kentik-connect-app/styles/dark.css',
+  light: 'plugins/kentik-connect-app/styles/light.css',
 });
 
 const panelDefaults = {

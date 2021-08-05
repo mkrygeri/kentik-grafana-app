@@ -39,7 +39,7 @@ export class DeviceDetailsCtrl {
 
   async fetchDevice(deviceId: string): Promise<void> {
     const resp = await this.backendSrv.get(
-      `/api/plugin-proxy/kentik-app/api/v5/device/${deviceId}`
+      `/api/plugin-proxy/kentik-connect-app/api/v5/device/${deviceId}`
     );
     this.device = resp.device;
     this.updateDeviceDTO();
@@ -81,7 +81,7 @@ export class DeviceDetailsCtrl {
 
     try {
       const resp = await this.backendSrv.put(
-        `/api/plugin-proxy/kentik-app/api/v5/device/${this.deviceDTO.device_id}`,
+        `/api/plugin-proxy/kentik-connect-app/api/v5/device/${this.deviceDTO.device_id}`,
         data
       );
       if ('err' in resp) {

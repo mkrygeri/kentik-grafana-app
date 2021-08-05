@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/grafana/kentik-app.svg?style=svg)](https://circleci.com/gh/grafana/kentik-app)
-[![David Dependancy Status](https://david-dm.org/grafana/kentik-app.svg)](https://david-dm.org/grafana/kentik-app)
-[![David Dev Dependency Status](https://david-dm.org/grafana/kentik-app/dev-status.svg)](https://david-dm.org/grafana/kentik-app/?type=dev)
+[![CircleCI](https://circleci.com/gh/kentik/kentik-grafana-app.svg?style=svg)](https://circleci.com/gh/kentik/kentik-grafana-app)
+[![David Dependancy Status](https://david-dm.org/kentik/kentik-grafana-app.svg)](https://david-dm.org/kentik/kentik-grafana-app)
+[![David Dev Dependency Status](https://david-dm.org/kentik/kentik-grafana-app/dev-status.svg)](https://david-dm.org/kentik/kentik-grafana-app/?type=dev)
 
 
 
@@ -42,9 +42,12 @@ Grafana docs about plugin installation: https://grafana.com/docs/plugins/install
 
 #### Install / update plugin
 ```bash
-grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/download/v1.4.2/kentik-app-1.4.2.zip" plugins install kentik-app
+grafana-cli remove kentik-app # if you're updating from version < 1.5.0
+grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/download/v1.5.0/kentik-connect-app-1.5.0.zip" plugins install kentik-connect-app
 sudo systemctl restart grafana-server
 ```
+
+**Note: if you're updating from version < 1.5.0, you'll need to enable the plugin in Grafana again**
 
 ### Manual installation
 
@@ -54,19 +57,19 @@ sudo systemctl restart grafana-server
   - For Grafana installed using Standalone Linux Binaries or source:
     - `<GRAFANA_PATH>/data/plugins`
 
-- Download kentik-app
+- Remove old kentik-connect-app (if it exists)
 ```bash
-wget https://github.com/kentik/kentik-grafana-app/releases/download/v1.4.2/kentik-app-1.4.2.tar.gz
+rm -rf kentik-app kentik-connect-app-*
 ```
 
-- Remove old kentik-app (if it exists)
+- Download kentik-connect-app
 ```bash
-rm -rf kentik-app
+wget https://github.com/kentik/kentik-grafana-app/releases/download/v1.5.0/kentik-connect-app-1.5.0.tar.gz
 ```
 
 - Unpack downloaded files
 ```bash
-tar -zxvf kentik-app-1.4.2.tar.gz
+tar -zxvf kentik-connect-app-1.5.0.tar.gz
 ```
 
 - Restart Grafana
@@ -76,6 +79,8 @@ tar -zxvf kentik-app-1.4.2.tar.gz
     - Stop any running instances of grafana-server
     - Start grafana-server: `cd <GRAFANA_PATH> && ./bin/grafana-server`
 
+**Note: if you're updating from version < 1.5.0, you'll need to enable the plugin in Grafana again**
+
 ### Docker installation
 
 You can install Kentik App to Grafana in Docker passing it as the environment variable.
@@ -83,7 +88,7 @@ You can install Kentik App to Grafana in Docker passing it as the environment va
 ```bash
 docker run \
   -p 3000:3000 \
-  -e "GF_INSTALL_PLUGINS=https://github.com/kentik/kentik-grafana-app/releases/download/v1.4.2/kentik-app-1.4.2.zip;kentik-grafana-app" \
+  -e "GF_INSTALL_PLUGINS=https://github.com/kentik/kentik-grafana-app/releases/download/v1.5.0/kentik-connect-app-1.5.0.zip;kentik-connect-app" \
   grafana/grafana
 ```
 

@@ -9,8 +9,8 @@ import * as _ from 'lodash';
 
 
 loadPluginCss({
-  dark: 'plugins/kentik-app/styles/dark.css',
-  light: 'plugins/kentik-app/styles/light.css',
+  dark: 'plugins/kentik-connect-app/styles/dark.css',
+  light: 'plugins/kentik-connect-app/styles/light.css',
 });
 
 const panelDefaults = {
@@ -60,10 +60,10 @@ class DeviceListCtrl extends PanelCtrl {
   }
 
   gotoDeviceDetail(device: any) {
-    this.$location.url('/plugins/kentik-app/page/device-details?device=' + device.id);
+    this.$location.url('/plugins/kentik-connect-app/page/device-details?device=' + device.id);
   }
 }
 
-DeviceListCtrl.templateUrl = 'public/plugins/kentik-app/components/device_list.html';
+DeviceListCtrl.templateUrl = 'public/plugins/kentik-connect-app/components/device_list.html';
 
 export { DeviceListCtrl as PanelCtrl };

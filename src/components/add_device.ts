@@ -42,12 +42,12 @@ export class AddDeviceCtrl {
       ips.push(ip.ip);
     });
     this.device.sending_ips = ips.join();
-    const resp = await this.backendSrv.post(`/api/plugin-proxy/kentik-app/api/v5/device`, this.device);
+    const resp = await this.backendSrv.post(`/api/plugin-proxy/kentik-connect-app/api/v5/device`, this.device);
     if ('err' in resp) {
       this.alertSrv.set('Device Add failed.', resp.err, 'error');
       throw new Error(`Device Add failed: ${resp.err}`);
     } else {
-      this.$location.url('/plugins/kentik-app/page/device-list');
+      this.$location.url('/plugins/kentik-connect-app/page/device-list');
     }
   }
 }
