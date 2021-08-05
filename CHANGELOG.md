@@ -11,9 +11,6 @@ Plugin ID is changed according to [Grafana convention](https://grafana.com/docs/
 **Please refer to the updated installation instructions before updating.** 
 It's important to **remove the existing plugin** and **enable the plugin in Grafana again**.
 
-### Changed
-- Plugin is packaged according to [Grafana docs](https://grafana.com/docs/grafana/latest/developers/plugins/package-a-plugin/)
-
 ## [1.4.2] - 2021-05-21
 
 ### Fixed
