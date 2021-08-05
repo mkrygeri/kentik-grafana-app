@@ -2,13 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.5.0] - 2021-07-14
+## [1.5.0] - 2021-08-06
 
 ### Breaking changes
 
 Plugin ID is changed according to [Grafana convention](https://grafana.com/docs/grafana/v7.5/developers/plugins/legacy/review-guidelines/#pluginjson): `kentik-app` -> `kentik-connect-app`.
 
-**You'll need to remove the old plugin version manually. Please refer to the updated installation instructions before updating.** Otherwise, there will be 2 versions of Kentik Connect Pro App installed.
+**Please refer to the updated installation instructions before updating.** 
+It's important to **remove the existing plugin** and **enable the plugin in Grafana again**.
 
 ### Changed
 - Plugin is packaged according to [Grafana docs](https://grafana.com/docs/grafana/latest/developers/plugins/package-a-plugin/)

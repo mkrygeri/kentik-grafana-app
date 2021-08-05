@@ -47,6 +47,8 @@ grafana-cli --pluginUrl "https://github.com/kentik/kentik-grafana-app/releases/d
 sudo systemctl restart grafana-server
 ```
 
+**Note: if you're updating from version < 1.5.0, you'll need to enable the plugin in Grafana again**
+
 ### Manual installation
 
 - Navigate to Grafana plugins directory:
@@ -76,6 +78,8 @@ tar -zxvf kentik-connect-app-1.5.0.tar.gz
   - For Grafana installed using Standalone Linux Binaries or source:
     - Stop any running instances of grafana-server
     - Start grafana-server: `cd <GRAFANA_PATH> && ./bin/grafana-server`
+
+**Note: if you're updating from version < 1.5.0, you'll need to enable the plugin in Grafana again**
 
 ### Docker installation
 
