@@ -92,5 +92,34 @@ docker run \
   grafana/grafana
 ```
 
+## Build
+To produce a build of the plugin you will need [Docker](https://www.docker.com/products/docker-desktop). If you want to build locally without
+Docker then you can reference the `Dockerfile` for the required dependencies.
+
+To create a local package, use `make`:
+
+**Note:** you will need to have a Grafana API Key in order to create a build as the package is signed.
+
+```
+make GRAFANA_API_KEY=$GRAFANA_API_KEY
+```
+
+If the builds succeeds, it will produce an archive named `kentik-connect-app-dev.zip`.
+
+To specify a version, use the `VERSION` environment variable:
+
+```
+make GRAFANA_API_KEY=$GRAFANA_API_KEY VERSION=1.5.0
+```
+
+This will produce an archive named `kentik-connect-app-1.5.0.zip`.
+
+To add extra signing arguments use the `SIGN_ARGS` environment variable. For example, to specify a private archive
+for use on the `https://grafana-test.kentiklabs.com` domain:
+
+```
+make GRAFANA_API_KEY=$GRAFANA_API_KEY SIGN_ARGS="--rootUrls https://grafana-test.kentiklabs.com"
+```
+
 #### Useful links
 - Grafana docs about Docker installation: https://docs.grafana.org/installation/docker/#installing-plugins-from-other-sources
