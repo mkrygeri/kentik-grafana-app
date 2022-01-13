@@ -56,12 +56,14 @@
       "addToNav": false
     },
     {
+      "uid": "NS58GIo71",
       "type": "dashboard",
       "name": "Kentik Top Talkers",
       "path": "dashboards/kentik-top-talkers.json",
       "addToNav": true
     },
     {
+      "uid": "xScUGST71",
       "type": "dashboard",
       "name": "Kentik Home",
       "path": "dashboards/kentik-home.json",
