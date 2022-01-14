@@ -1,25 +1,29 @@
 import { AppRootProps } from '@grafana/data';
 import React, { FC } from 'react';
 
-export const A: FC<AppRootProps> = ({ query, path, meta }) => {
+export const A: FC<AppRootProps> = (props) => {
+  function readProps(): void {
+    console.log('props', props);
+  }
+
   return (
     <div>
       <ul>
         <li>
-          <a href={path + '?x=1'}>Change query to 1</a>
+          <a href={props.path + '?x=1'} onClick={readProps}>Change query to 1</a>
         </li>
         <li>
-          <a href={path + '?x=AAA'}>Change query to AAA</a>
+          <a href={props.path + '?x=AAA'}>Change query to AAA</a>
         </li>
         <li>
-          <a href={path + '?x=1&y=2&y=3'}>Put multiple properties into the query</a>
+          <a href={props.path + '?x=1&y=2&y=3'}>Put multiple properties into the query</a>
         </li>
       </ul>
       <br />
-      QUERY: <pre>{JSON.stringify(query)}</pre>
+      QUERY: <pre>{JSON.stringify(props.query)}</pre>
       <br />
       Stored configuration data:
-      <pre>{JSON.stringify(meta.jsonData)}</pre>
+      <pre>{JSON.stringify(props.meta.jsonData)}</pre>
     </div>
   );
 };
