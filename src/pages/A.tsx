@@ -1,7 +1,27 @@
+import { KentikAPI } from '../datasource/kentik_api';
+
 import { AppRootProps } from '@grafana/data';
-import React, { FC } from 'react';
+import { getBackendSrv } from '@grafana/runtime';
+import React, { FC, useState, useEffect } from 'react';
 
 export const A: FC<AppRootProps> = (props) => {
+  const [devices] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const backendSrv: any = await getBackendSrv();
+      console.log('backendSrv', backendSrv, KentikAPI);
+      const kentik = new KentikAPI(backendSrv);
+      console.log('kentik', kentik);
+      let devices = await kentik.getDevices();
+      console.log('devices', devices);
+      // setDevices(devices);
+    }
+
+    fetchData();
+  }, []);
+
+  console.log('devices', devices);
   function readProps(): void {
     console.log('props', props);
   }

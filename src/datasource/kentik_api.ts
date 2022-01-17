@@ -9,15 +9,15 @@ import angular from 'angular';
 export class KentikAPI {
   baseUrl: string;
   /** @ngInject */
-  constructor(public backendSrv: BackendSrv, public $http: ng.IHttpService) {
+  constructor(public backendSrv: BackendSrv, public $http?: ng.IHttpService) {
     this.baseUrl = '/api/plugin-proxy/kentik-connect-app';
   }
 
   async getDevices(): Promise<any> {
     const resp = await this._get('/api/v5/devices');
-
-    if (resp.data && resp.data.devices) {
-      return resp.data.devices;
+    console.log('resp', resp);
+    if (resp && resp.devices) {
+      return resp.devices;
     } else {
       return [];
     }
@@ -69,10 +69,9 @@ export class KentikAPI {
 
   private async _get(url: string, requiresAdminLevel = false): Promise<any> {
     try {
-      const resp = await this.$http({
-        method: 'GET',
-        url: this.baseUrl + url,
-      });
+      const resp = await this.backendSrv.get(
+        this.baseUrl + url,
+      );
 
       return resp;
     } catch (error) {
@@ -89,11 +88,10 @@ export class KentikAPI {
 
   private async _post(url: string, data: any): Promise<any> {
     try {
-      const resp = await this.$http({
-        method: 'POST',
-        url: this.baseUrl + url,
-        data: data,
-      });
+      const resp = await this.backendSrv.post(
+        this.baseUrl + url,
+        data,
+      );
 
       if (resp.data) {
         return resp.data;
