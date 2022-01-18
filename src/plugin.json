@@ -44,16 +44,9 @@
     {
       "type": "page",
       "name": "Device List",
-      "component": "DeviceListCtrl",
       "role": "Editor",
-      "addToNav": true
-    },
-    {
-      "type": "page",
-      "name": "Device Details",
-      "component": "DeviceDetailsCtrl",
-      "role": "Editor",
-      "addToNav": false
+      "addToNav": true,
+      "path": "/a/kentik-connect-app"
     },
     {
       "uid": "NS58GIo71",
@@ -67,8 +60,7 @@
       "type": "dashboard",
       "name": "Kentik Home",
       "path": "dashboards/kentik-home.json",
-      "addToNav": true,
-      "defaultNav": true
+      "addToNav": true
     },
     {
       "type": "panel",
