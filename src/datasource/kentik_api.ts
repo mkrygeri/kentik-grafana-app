@@ -37,7 +37,7 @@ export class KentikAPI {
     try {
       const requiresAdminLevel = true;
       const resp = await this._get('/api/v5/customdimensions', requiresAdminLevel);
-      return resp.data.customDimensions;
+      return resp.customDimensions;
     } catch (e) {
       if (e.status === 403) {
         return [];
@@ -48,7 +48,7 @@ export class KentikAPI {
 
   async getSavedFilters(): Promise<any> {
     const data = await this._get('/api/v5/saved-filters');
-    return data.data;
+    return data;
   }
 
   async invokeTopXDataQuery(query: any): Promise<any> {
@@ -93,8 +93,8 @@ export class KentikAPI {
         data,
       );
 
-      if (resp.data) {
-        return resp.data;
+      if (resp) {
+        return resp;
       } else {
         return [];
       }
