@@ -38,7 +38,12 @@
   </div>
 </div>
 
-<section ng-if="ctrl.devices.length > 0" class="card-section card-list-layout-list" layout-mode>
+<section
+  ng-if="ctrl.devices.length > 0"
+  class="card-section card-list-layout-list"
+  style="height: calc(100% - 64px); overflow-y: auto;"
+  layout-mode
+>
   <ol class="card-list">
     <li class="card-item-wrapper card-item-wrapper--clickable" ng-repeat="device in ctrl.devices | orderBy:'device_name'">
       <div class="card-item pointer" ng-click="ctrl.gotoDashboard(device)">
