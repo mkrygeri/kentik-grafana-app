@@ -69,6 +69,17 @@
             "tags": [
               "kentik"
             ],
+            "options": {
+              "showStarred": false,
+              "showRecentlyViewed": false,
+              "showSearch": true,
+              "showHeadings": false,
+              "maxItems": 10,
+              "query": "",
+              "tags": [
+                "kentik"
+              ]
+            },
             "title": "Kentik dashboards",
             "type": "dashlist"
           }
