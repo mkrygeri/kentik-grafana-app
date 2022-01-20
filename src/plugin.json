@@ -43,7 +43,7 @@
   "includes": [
     {
       "type": "page",
-      "name": "Device List",
+      "name": "Add Device",
       "role": "Editor",
       "addToNav": true,
       "path": "/a/kentik-connect-app"
