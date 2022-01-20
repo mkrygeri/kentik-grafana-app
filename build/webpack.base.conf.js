@@ -81,7 +81,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist'], {
       root: resolve('.')
     }),
-    // new ngAnnotatePlugin()
+    new ngAnnotatePlugin()
   ],
   resolve: {
     extensions: ['.js', '.ts', '.html', '.scss', '.tsx'],
