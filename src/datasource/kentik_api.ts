@@ -71,6 +71,7 @@ export class KentikAPI {
     try {
       const resp = await this.backendSrv.get(
         this.baseUrl + url,
+        { showErrorAlert: !requiresAdminLevel }
       );
 
       return resp;
