@@ -67,5 +67,5 @@ class CallToActiontCtrl extends PanelCtrl {
   }
 }
 
-CallToActiontCtrl.templateUrl = '/panel/call_to_action/module.html';
+CallToActiontCtrl.templateUrl = 'public/plugins/kentik-connect-app/panel/call_to_action/module.html';
 export { CallToActiontCtrl as PanelCtrl };
