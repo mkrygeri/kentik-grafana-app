@@ -55,7 +55,16 @@ export const A: FC<AppRootProps> = (props) => {
   function removeIP(index: number): void {
     setState({
       ...state,
-      sendingIps: state.sendingIps.slice(index)
+      sendingIps: _.filter(state.sendingIps, (el, idx) => idx !== index)
+    });
+  }
+
+  function handleIpChange(event: React.ChangeEvent<HTMLInputElement>, index: number): void {
+    let ipsForUpdate = state.sendingIps;
+    ipsForUpdate[index] = { ip: event.target.value };
+    setState({
+      ...state,
+      sendingIps: ipsForUpdate
     });
   }
 
@@ -136,10 +145,10 @@ export const A: FC<AppRootProps> = (props) => {
           state.sendingIps.map((ip, index) => {
             return <div className="gf-form">
               <label className="gf-form-label width-11">Source Address</label>
-              <input className="gf-form-input max-width-15" type="text" value={ip.ip} required />
+              <input className="gf-form-input max-width-15" type="text" value={ip.ip} onChange={(event) => handleIpChange(event, index)} required />
               
               {
-                index === 0 ? 
+                index === 0 ?
                 <a className="btn btn-inverse btn-small" onClick={addIP}><i className="fa fa-plus"></i></a> :
                 <a className="btn btn-inverse btn-small" onClick={() => removeIP(index)}><i className="fa fa-minus"></i></a>
               }
