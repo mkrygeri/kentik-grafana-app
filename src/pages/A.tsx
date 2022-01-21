@@ -60,11 +60,23 @@ export const A: FC<AppRootProps> = (props) => {
   }
 
   function handleIpChange(event: React.ChangeEvent<HTMLInputElement>, index: number): void {
+    console.log('dev', event);
     let ipsForUpdate = state.sendingIps;
     ipsForUpdate[index] = { ip: event.target.value };
     setState({
       ...state,
       sendingIps: ipsForUpdate
+    });
+  }
+
+  function onDeviceFieldChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>, field: string): void {
+    console.log('state', state.device, field);
+    let deviceForUpdate = state.device;
+    // @ts-ignore
+    deviceForUpdate[field] = event.target.value;
+    setState({
+      ...state,
+      device: deviceForUpdate
     });
   }
 
@@ -81,6 +93,44 @@ export const A: FC<AppRootProps> = (props) => {
     } else {
       // this.$location.url('/plugins/kentik-connect-app/page/device-list');
     }
+  }
+
+  let typeSelector;
+  switch(state.device.device_type) {
+    case 'router':
+      typeSelector = <div className="gf-form">
+        <label className="gf-form-label width-11">Flow Type</label>
+        <div className="gf-form-select-wrapper">
+          <select
+            className="gf-form-input gf-size-auto"
+            ng-model="ctrl.device.device_flow_type"
+            value={state.device.device_flow_type}
+            onChange={(event) => onDeviceFieldChange(event, 'device_flow_type')}
+          >
+            <option value="sflow">sFlow</option>
+            <option value="netflow.v5">NetFlow v5</option>
+            <option value="netflow.v9">NetFlow v9</option>
+            <option value="ipfix">IPFIX</option>
+          </select>
+        </div>
+      </div>
+      break;
+    case 'host-nprobe-basic':
+      typeSelector = <div className="gf-form">
+        <label className="gf-form-label width-11">Flow Type</label>
+        <div className="gf-form-select-wrapper">
+          <select
+            className="gf-form-input gf-size-auto"
+            value={state.device.device_flow_type}
+            onChange={(event) => onDeviceFieldChange(event, 'device_flow_type')}
+          >
+            <option value="hiresflow">HiresFlow</option>
+          </select>
+        </div>
+      </div>
+      break;
+    default:
+      typeSelector = <div></div>
   }
 
   return (
@@ -118,28 +168,16 @@ export const A: FC<AppRootProps> = (props) => {
           <label className="gf-form-label width-11">Description</label>
           <input className="gf-form-input max-width-21" type="text" ng-model="ctrl.device.device_description" />
         </div>
-        <div className="gf-form" ng-if="ctrl.device.device_type == 'router'">
-          <label className="gf-form-label width-11">Flow Type</label>
-          <div className="gf-form-select-wrapper">
-            <select className="gf-form-input gf-size-auto" ng-model="ctrl.device.device_flow_type">
-              <option value="sflow">sFlow</option>
-              <option value="netflow.v5">NetFlow v5</option>
-              <option value="netflow.v9">NetFlow v9</option>
-              <option value="ipfix">IPFIX</option>
-            </select>
-          </div>
-        </div>
-        <div className="gf-form" ng-if="ctrl.device.device_type == 'host-nprobe-basic'">
-          <label className="gf-form-label width-11">Flow Type</label>
-          <div className="gf-form-select-wrapper">
-            <select className="gf-form-input gf-size-auto" ng-model="ctrl.device.device_flow_type">
-              <option value="hiresflow">HiresFlow</option>
-            </select>
-          </div>
-        </div>
+        {typeSelector}
         <div className="gf-form">
           <label className="gf-form-label width-11">Sample Rate</label>
-          <input className="gf-form-input max-width-5" type="number" required ng-model="ctrl.device.device_sample_rate" />
+          <input
+            className="gf-form-input max-width-5"
+            type="number"
+            required
+            value={state.device.device_sample_rate}
+            onChange={(event) => onDeviceFieldChange(event, 'device_sample_rate')}
+          />
         </div>
         {
           state.sendingIps.map((ip, index) => {
