@@ -1,5 +1,3 @@
-// import { KentikAPI } from '../datasource/kentik_api';
-
 import { AppRootProps } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import React, { FC, useState } from 'react';
@@ -19,25 +17,7 @@ const defaults = {
   device_snmp_community: '',
 };
 
-export const AddDevice: FC<AppRootProps> = (props) => {
-  // TODO: this part is for Device List page
-  // const [devices, setDevices] = useState();
-
-  // useEffect(() => {
-    // const fetchData = async () => {
-  //     console.log('backendSrv', backendSrv, KentikAPI);
-  //     const kentik = new KentikAPI(backendSrv);
-  //     console.log('kentik', kentik);
-  //     let devices = await kentik.getDevices();
-  //     // console.log('devices', devices);
-  //     setDevices(devices);
-    // }
-
-  //   fetchData();
-  // }, []);
-
-  // console.log('devices', devices);
-
+export const AddDevice: FC<AppRootProps> = () => {
   const backendSrv = getBackendSrv();
 
   const [state, setState] = useState({
@@ -91,15 +71,17 @@ export const AddDevice: FC<AppRootProps> = (props) => {
     };
     const resp = await backendSrv.post(`/api/plugin-proxy/kentik-connect-app/api/v5/device`, payload);
     if ('err' in resp) {
+      // TODO: find AlertSrv somewhere, e.g. @grafana/data or something
       // this.alertSrv.set('Device Add failed.', resp.err, 'error');
       throw new Error(`Device Add failed: ${resp.err}`);
     } else {
+      // TODO: find a way to redirect
       // this.$location.url('/plugins/kentik-connect-app/page/device-list');
     }
   }
 
   function cancel(): void {
-    // go to the Home dashboard
+    // TODO: go to the Home dashboard
   }
 
   let typeSelector;
