@@ -18,8 +18,8 @@ const defaults = {
   device_snmp_ip: '',
   device_snmp_community: '',
 };
-// TODO: rename to AddDevice
-export const A: FC<AppRootProps> = (props) => {
+
+export const AddDevice: FC<AppRootProps> = (props) => {
   // TODO: this part is for Device List page
   // const [devices, setDevices] = useState();
 
@@ -155,11 +155,11 @@ export const A: FC<AppRootProps> = (props) => {
       <div className="gf-form-group">
         <div className="gf-form">
           <label className="gf-form-label width-11">Device Name</label>
-          <input 
-            className="gf-form-input max-width-21" 
+          <input
+            className="gf-form-input max-width-21"
             type="text"
             pattern="^[A-Za-z0-9_]{1,15}$"
-            required 
+            required
             value={state.device.device_name}
             onChange={(event) => onDeviceFieldChange(event, 'device_name')}
           />
