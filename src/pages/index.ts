@@ -1,5 +1,7 @@
-import { AppRootProps } from '@grafana/data';
 import { AddDevice } from './AddDevice';
+import { DeviceList } from './DeviceList';
+
+import { AppRootProps } from '@grafana/data';
 
 export type PageDefinition = {
   component: React.FC<AppRootProps>;
@@ -14,5 +16,11 @@ export const pages: PageDefinition[] = [
     icon: 'file-alt',
     id: 'add-device',
     text: 'Add Device',
+  },
+  {
+    component: DeviceList,
+    icon: 'file-alt',
+    id: 'device-list',
+    text: 'Device List',
   }
 ];

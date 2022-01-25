@@ -1,7 +1,5 @@
 import { showAlert } from '../datasource/alert_helper';
 
-import { BackendSrv } from 'grafana/app/core/services/backend_srv';
-
 import * as _ from 'lodash';
 import angular from 'angular';
 
@@ -9,7 +7,7 @@ import angular from 'angular';
 export class KentikAPI {
   baseUrl: string;
   /** @ngInject */
-  constructor(public backendSrv: BackendSrv, public $http?: ng.IHttpService) {
+  constructor(public backendSrv: any, public $http?: ng.IHttpService) {
     this.baseUrl = '/api/plugin-proxy/kentik-connect-app';
   }
 
