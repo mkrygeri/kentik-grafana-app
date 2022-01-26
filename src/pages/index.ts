@@ -17,10 +17,14 @@ export const pages: PageDefinition[] = [
     id: 'device-list',
     text: 'Device List',
   },
+];
+
+export const extendedPages: PageDefinition[] = [
+  ...pages,
   {
     component: AddDevice,
     icon: 'file-alt',
     id: 'add-device',
     text: 'Add Device',
   },
-];
+]
