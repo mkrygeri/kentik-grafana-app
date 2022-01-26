@@ -1,6 +1,9 @@
-import { AppRootProps } from '@grafana/data';
+import { appEvents } from 'grafana/app/core/core';
+
+import { AppRootProps, AppEvents } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
-import React, { FC, useState } from 'react';
+
+import React, { FC, FormEvent, useState } from 'react';
 import _ from 'lodash';
 
 
@@ -60,7 +63,9 @@ export const AddDevice: FC<AppRootProps> = () => {
     });
   }
 
-  async function addDevice(): Promise<void> {
+  async function addDevice(event: FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
+
     const ips: string[] = [];
     _.forEach(state.sendingIps, ip => {
       ips.push(ip.ip);
@@ -71,8 +76,7 @@ export const AddDevice: FC<AppRootProps> = () => {
     };
     const resp = await backendSrv.post(`/api/plugin-proxy/kentik-connect-app/api/v5/device`, payload);
     if ('err' in resp) {
-      // TODO: find AlertSrv somewhere, e.g. @grafana/data or something
-      // this.alertSrv.set('Device Add failed.', resp.err, 'error');
+      appEvents.emit(AppEvents.alertError, ['Device Add failed', resp.err]);
       throw new Error(`Device Add failed: ${resp.err}`);
     } else {
       // TODO: find a way to redirect
@@ -122,7 +126,7 @@ export const AddDevice: FC<AppRootProps> = () => {
   }
 
   return (
-    <form name="addDeviceForm">
+    <form name="addDeviceForm" onSubmit={addDevice}>
       <div className="page-header">
         <h1>Add a New Device</h1>
       </div>
@@ -247,7 +251,7 @@ export const AddDevice: FC<AppRootProps> = () => {
           </div>
         </div>
       </div>
-      <button className="btn btn-success" onClick={addDevice}>Add Device</button>
+      <button className="btn btn-success">Add Device</button>
       <a className="btn btn-link" onClick={cancel}>Cancel</a>
     </form>
   );
