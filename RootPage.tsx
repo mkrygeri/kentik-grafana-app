@@ -9,7 +9,7 @@ import { getBackendSrv } from '@grafana/runtime';
 import * as _ from 'lodash';
 
 
-export const ExampleRootPage = React.memo(function ExampleRootPage(props: AppRootProps) {
+export const RootPage = React.memo(function RootPage(props: AppRootProps) {
   const {
     path,
     onNavChanged,
