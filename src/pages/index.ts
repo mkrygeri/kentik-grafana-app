@@ -12,15 +12,15 @@ export type PageDefinition = {
 
 export const pages: PageDefinition[] = [
   {
+    component: DeviceList,
+    icon: 'file-alt',
+    id: 'device-list',
+    text: 'Device List',
+  },
+  {
     component: AddDevice,
     icon: 'file-alt',
     id: 'add-device',
     text: 'Add Device',
   },
-  {
-    component: DeviceList,
-    icon: 'file-alt',
-    id: 'device-list',
-    text: 'Device List',
-  }
 ];
