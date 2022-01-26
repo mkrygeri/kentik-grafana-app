@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react';
 import { AppPlugin, AppRootProps } from '@grafana/data';
-import { ExampleRootPage } from './ExampleRootPage';
+import { RootPage } from './RootPage';
 
 import './styles/dark.scss';
 import './styles/light.scss';
@@ -16,4 +16,4 @@ loadPluginCss({
 export { ConfigCtrl };
 
 export const plugin = new AppPlugin<{}>()
-  .setRootPage((ExampleRootPage as unknown) as ComponentClass<AppRootProps>)
+  .setRootPage((RootPage as unknown) as ComponentClass<AppRootProps>)
