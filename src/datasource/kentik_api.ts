@@ -11,9 +11,26 @@ export class KentikAPI {
     this.baseUrl = '/api/plugin-proxy/kentik-connect-app';
   }
 
+  async getDeviceById(deviceId: string): Promise<any> {
+    const resp = await this._get(`/api/v5/device/${deviceId}`);
+    if (resp && resp.device) {
+      return resp.device;
+    } else {
+      return [];
+    }
+  }
+
+  async updateDevice(deviceId: string, data: any): Promise<any> {
+    const resp = await this._put(`/api/v5/device/${deviceId}`, data);
+    if (resp && resp.device) {
+      return resp.device;
+    } else {
+      return [];
+    }
+  }
+
   async getDevices(): Promise<any> {
     const resp = await this._get('/api/v5/devices');
-    console.log('resp', resp);
     if (resp && resp.devices) {
       return resp.devices;
     } else {
@@ -87,6 +104,28 @@ export class KentikAPI {
   private async _post(url: string, data: any): Promise<any> {
     try {
       const resp = await this.backendSrv.post(
+        this.baseUrl + url,
+        data,
+      );
+
+      if (resp) {
+        return resp;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      showAlert(error);
+      if (error.err) {
+        throw error.err;
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  private async _put(url: string, data: any): Promise<any> {
+    try {
+      const resp = await this.backendSrv.put(
         this.baseUrl + url,
         data,
       );
