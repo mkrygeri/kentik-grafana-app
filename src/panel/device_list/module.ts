@@ -21,6 +21,7 @@ class DeviceListCtrl extends PanelCtrl {
   static templateUrl: string;
   devices: any[];
   pageReady: boolean;
+  showDeviceDesc: boolean;
   kentik: KentikAPI = {} as KentikAPI;
 
   /** @ngInject */
@@ -33,8 +34,10 @@ class DeviceListCtrl extends PanelCtrl {
   ) {
     super($scope, $injector);
     _.defaults(this.panel, panelDefaults);
+
     this.devices = [];
     this.pageReady = false;
+    this.showDeviceDesc = false;
 
     this.kentik = new KentikAPI(this.backendSrv, this.$http);
     this.fetchDevices();
@@ -58,12 +61,8 @@ class DeviceListCtrl extends PanelCtrl {
   gotoDashboard(device: any) {
     this.$location.path('/dashboard/db/kentik-top-talkers').search({ 'var-device': device.device_name });
   }
-
-  gotoDeviceDetail(device: any) {
-    this.$location.url('/plugins/kentik-connect-app/page/device-details?device=' + device.id);
-  }
 }
 
-DeviceListCtrl.templateUrl = 'public/plugins/kentik-connect-app/components/device_list.html';
+DeviceListCtrl.templateUrl = 'public/plugins/kentik-connect-app/panel/device_list/module.html';
 
 export { DeviceListCtrl as PanelCtrl };
