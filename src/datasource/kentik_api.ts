@@ -67,9 +67,8 @@ export class KentikAPI {
 
   private async _get(url: string, requiresAdminLevel = false): Promise<any> {
     try {
-      const resp = await this.backendSrv.get(
-        this.baseUrl + url,
-        { showErrorAlert: !requiresAdminLevel }
+      const resp = await this.backendSrv.request(
+        { method: 'GET', url: this.baseUrl + url,  showErrorAlert: !requiresAdminLevel }
       );
 
       return resp;
