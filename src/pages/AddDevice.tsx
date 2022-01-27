@@ -14,7 +14,7 @@ const defaults = {
   device_flow_type: 'sflow',
   device_sample_rate: 5,
   sending_ips: '',
-  minimize_snmp: 'false',
+  minimize_snmp: 0,
   device_bgp_type: 'none',
   device_snmp_ip: '',
   device_snmp_community: '',
@@ -26,7 +26,7 @@ export const AddDevice: FC<AppRootProps> = () => {
   const [state, setState] = useState({
     device: _.cloneDeep(defaults),
     sendingIps: [{ ip: '' }]
-  })
+  });
 
   function addIP(): void {
     setState({
@@ -43,7 +43,6 @@ export const AddDevice: FC<AppRootProps> = () => {
   }
 
   function handleIpChange(event: React.ChangeEvent<HTMLInputElement>, index: number): void {
-    console.log('dev', event);
     let ipsForUpdate = state.sendingIps;
     ipsForUpdate[index] = { ip: event.target.value };
     setState({
@@ -72,6 +71,7 @@ export const AddDevice: FC<AppRootProps> = () => {
     });
     const payload = {
       ...state.device,
+      minimize_snmp: Boolean(state.device.minimize_snmp),
       sending_ips: ips.join()
     };
     const resp = await backendSrv.post(`/api/plugin-proxy/kentik-connect-app/api/v5/device`, payload);
@@ -215,8 +215,8 @@ export const AddDevice: FC<AppRootProps> = () => {
                 value={state.device.minimize_snmp}
                 onChange={(event) => onDeviceFieldChange(event, 'minimize_snmp')}
               >
-                <option value="true">Minimum</option>
-                <option value="false">Standard</option>
+                <option value="1">Minimum</option>
+                <option value="0">Standard</option>
               </select>
             </div>
           </div>

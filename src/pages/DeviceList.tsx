@@ -37,7 +37,7 @@ export const DeviceList: FC<AppRootProps> = ({ query, path, meta }) => {
   }
 
   function goToDashboard(device: any): void {
-    (window.location as any).path('/d/NS58GIo71/kentik-top-talkers').search({ 'var-device': device.device_name });
+    window.location = `/d/NS58GIo71/kentik-top-talkers?var-device=${device.device_name}` as any;
   }
 
   return (
