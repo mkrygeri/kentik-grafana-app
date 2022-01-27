@@ -62,7 +62,7 @@ export const DeviceList: FC<AppRootProps> = ({ query, path, meta }) => {
           <div>
             <i ng-className="icon" className="icon-gf icon-gf-endpoint no-endpoints"></i>
             <p>Looks like you don’t have any devices yet.<br />
-              <a className="highlight-word" href="plugins/kentik-connect-app/pages/add-device">Add a new device</a>
+              <a className="highlight-word" href="/a/kentik-connect-app?tab=add-device">Add a new device</a>
             </p>
           </div>
           <a href="#" ng-click="ctrl.showDeviceDesc = !ctrl.showDeviceDesc">

@@ -79,13 +79,12 @@ export const AddDevice: FC<AppRootProps> = () => {
       appEvents.emit(AppEvents.alertError, ['Device Add failed', resp.err]);
       throw new Error(`Device Add failed: ${resp.err}`);
     } else {
-      // TODO: find a way to redirect
-      // this.$location.url('/plugins/kentik-connect-app/page/device-list');
+      window.location = '/a/kentik-connect-app?tab=device-list' as any;
     }
   }
 
   function cancel(): void {
-    // TODO: go to the Home dashboard
+    window.location = '/d/xScUGST71/kentik-home' as any;
   }
 
   let typeSelector;

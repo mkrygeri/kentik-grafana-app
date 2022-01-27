@@ -14,10 +14,10 @@
 
 <div ng-if="ctrl.pageReady">
   <div ng-if="ctrl.devices.length === 0" class="kentik-empty-device-list">
-    <div style="text-align: center; padding-top: 90px; min-height: 220px; min-width: 400px;  margin: 0 auto;">
+    <div style="text-align: center; min-width: 400px; margin: 0 auto;">
       <i ng-class="icon" class="icon-gf icon-gf-endpoint no-endpoints"></i>
       <p>Looks like you don’t have any devices yet.<br>
-        <a class="highlight-word" href="plugins/kentik-connect-app/pages/add-device">Add a new device</a>
+        <a class="highlight-word" href="/a/kentik-connect-app?tab=add-device">Add a new device</a>
       </p>
     </div>
     <a href="#" ng-click="ctrl.showDeviceDesc = !ctrl.showDeviceDesc">
