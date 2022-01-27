@@ -69,29 +69,32 @@ export const DeviceList: FC<AppRootProps> = ({ query, path, meta }) => {
                 <div className="kentik-empty-device-list">
                   {/* inline styles */}
                   <div>
-                    <i className="icon icon-gf icon-gf-endpoint no-endpoints"></i>
+                    <i className="icon icon-gf icon-gf-endpoint-tiny no-endpoints"></i>
                     <p>Looks like you don’t have any devices yet.<br />
                       <a className="highlight-word" href="/a/kentik-connect-app?tab=add-device">Add a new device</a>
                     </p>
                   </div>
-                  <a href="#" onClick={onDeviceDescClick}>
+                  <a onClick={onDeviceDescClick}>
                     <span>What's a device?</span>
                     { !state.showDeviceDesc && <span><i className="fa fa-caret-right rt-box-accordian-control"></i></span> }
                     { state.showDeviceDesc && <span><i className="fa fa-caret-down"></i></span> }
                   </a>
-                  <div
-                    className={
-                      `kentik-connect-app-devicedesc-box ${state.showDeviceDesc ? 'kentik-connect-app-devicedesc-open' : ''}`
-                    }
-                  >
-                    <div className="kentik-collapse-blurb-box">
-                      <p className="kentik-helper-blurb">Devices in Kentik are sources of network flow data - commonly a network
-                        component such as a switch or router, or a flow generation agent on a host/server. </p>
-                      <p className="kentik-helper-blurb">Once configured, Kentik will automatically begin tracking and returning direct
-                        insights from that source viewpoint into exactly which applications and endpoints are actively driving
-                        network traffic.</p>
+                  { state.showDeviceDesc && (
+                    <div
+                      className={
+                        `kentik-connect-app-devicedesc-box`
+                      }
+                    >
+                      <div className="kentik-collapse-blurb-box">
+                        <p className="kentik-helper-blurb">Devices in Kentik are sources of network flow data - commonly a network
+                          component such as a switch or router, or a flow generation agent on a host/server. </p>
+                        <p className="kentik-helper-blurb">Once configured, Kentik will automatically begin tracking and returning direct
+                          insights from that source viewpoint into exactly which applications and endpoints are actively driving
+                          network traffic.</p>
+                      </div>
                     </div>
-                  </div>
+                    )
+                  }
                 </div>
               )
             }
