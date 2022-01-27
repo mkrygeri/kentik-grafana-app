@@ -15,21 +15,22 @@ export function useNavModel({ meta, pages, path, tab }: Args) {
     const tabs: NavModelItem[] = [];
 
     pages.forEach(({ text, icon, id }) => {
-      tabs.push({
-        text,
-        icon,
-        id,
-        url: `${path}?tab=${id}`,
-      });
-
       if (tab === id) {
-        tabs[tabs.length - 1].active = true;
+        tabs.push({
+          text,
+          icon,
+          id,
+          url: `${path}?tab=${id}`,
+          active: true
+        });
       }
     });
 
-    // Fallback if current `tab` doesn't match any page
-    if (!tabs.some(({ active }) => active)) {
-      tabs[0].active = true;
+    if (tabs.length === 0) {
+      tabs.push({
+        ...pages[0],
+        active: true
+      })
     }
 
     const node = {

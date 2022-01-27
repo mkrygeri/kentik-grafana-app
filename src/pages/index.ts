@@ -1,5 +1,6 @@
-import { AddDevice } from './AddDevice';
 import { DeviceList } from './DeviceList';
+import { DeviceDetails } from './DeviceDetails';
+import { AddDevice } from './AddDevice';
 
 import { AppRootProps } from '@grafana/data';
 
@@ -17,14 +18,16 @@ export const pages: PageDefinition[] = [
     id: 'device-list',
     text: 'Device List',
   },
-];
-
-export const extendedPages: PageDefinition[] = [
-  ...pages,
+  {
+    component: DeviceDetails,
+    icon: 'file-alt',
+    id: 'device-details',
+    text: 'Device Details',
+  },
   {
     component: AddDevice,
     icon: 'file-alt',
     id: 'add-device',
     text: 'Add Device',
-  },
-]
+  }
+];

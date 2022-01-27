@@ -1,4 +1,4 @@
-import { pages, extendedPages } from './pages';
+import { pages } from './pages';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavModel } from './utils/hooks';
 import { KentikAPI } from './datasource/kentik_api';
@@ -18,8 +18,7 @@ export const RootPage = React.memo(function RootPage(props: AppRootProps) {
   } = props;
 
   const [state, setState] = useState({
-    devices: null,
-    pages: _.clone(pages)
+    devices: null
   });
 
   const backendSrv = getBackendSrv();
@@ -31,13 +30,9 @@ export const RootPage = React.memo(function RootPage(props: AppRootProps) {
     }
     let devices = await kentik.getDevices();
 
-    let pages = state.pages;
-    if(devices.length === 0) {
-      pages = _.clone(extendedPages);
-    }
     setState({
-      devices,
-      pages
+      ...state,
+      devices
     });
   }
   // Required to support grafana instances that use a custom `root_url`.
@@ -45,7 +40,7 @@ export const RootPage = React.memo(function RootPage(props: AppRootProps) {
 
   // Update the navigation when the tab or path changes
   const navModel = useNavModel(
-    useMemo(() => ({ tab, pages: state.pages, path: pathWithoutLeadingSlash, meta }), [meta, pathWithoutLeadingSlash, tab, state.pages])
+    useMemo(() => ({ tab, pages: pages, path: pathWithoutLeadingSlash, meta }), [meta, pathWithoutLeadingSlash, tab, pages])
   );
 
   useEffect(() => {
@@ -54,8 +49,8 @@ export const RootPage = React.memo(function RootPage(props: AppRootProps) {
 
   useEffect(() => {
     onNavChanged(navModel);
-  }, [navModel, onNavChanged, state.pages]);
+  }, [navModel, onNavChanged, pages]);
 
-  const Page = state.pages.find(({ id }) => id === tab)?.component || state.pages[0].component;
+  const Page = pages.find(({ id }) => id === tab)?.component || pages[0].component;
   return <Page {...props} path={pathWithoutLeadingSlash} />;
 });
