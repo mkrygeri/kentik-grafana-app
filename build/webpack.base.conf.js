@@ -35,7 +35,8 @@ module.exports = {
   },
   externals: [
     // remove the line below if you don't want to use buildin versions
-    'jquery', 'lodash', 'moment', 'angular',
+    'jquery', 'lodash', 'moment', 'angular', 'react', 'react-dom',
+    '@grafana/ui', '@grafana/data', '@grafana/runtime',
     function (context, request, callback) {
       var prefix = 'grafana/';
       if (request.indexOf(prefix) === 0) {
@@ -83,12 +84,12 @@ module.exports = {
     new ngAnnotatePlugin()
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.html', '.scss'],
+    extensions: ['.js', '.ts', '.html', '.scss', '.tsx'],
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         exclude: [NODE_MODULES_REG_EXP],
         loaders: [
           'ts-loader'

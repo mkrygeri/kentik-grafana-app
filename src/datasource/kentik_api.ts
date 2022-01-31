@@ -1,7 +1,5 @@
 import { showAlert } from '../datasource/alert_helper';
 
-import { BackendSrv } from 'grafana/app/core/services/backend_srv';
-
 import * as _ from 'lodash';
 import angular from 'angular';
 
@@ -9,15 +7,32 @@ import angular from 'angular';
 export class KentikAPI {
   baseUrl: string;
   /** @ngInject */
-  constructor(public backendSrv: BackendSrv, public $http: ng.IHttpService) {
+  constructor(public backendSrv: any, public $http?: ng.IHttpService) {
     this.baseUrl = '/api/plugin-proxy/kentik-connect-app';
+  }
+
+  async getDeviceById(deviceId: string): Promise<any> {
+    const resp = await this._get(`/api/v5/device/${deviceId}`);
+    if (resp && resp.device) {
+      return resp.device;
+    } else {
+      return [];
+    }
+  }
+
+  async updateDevice(deviceId: string, data: any): Promise<any> {
+    const resp = await this._put(`/api/v5/device/${deviceId}`, data);
+    if (resp && resp.device) {
+      return resp.device;
+    } else {
+      return [];
+    }
   }
 
   async getDevices(): Promise<any> {
     const resp = await this._get('/api/v5/devices');
-
-    if (resp.data && resp.data.devices) {
-      return resp.data.devices;
+    if (resp && resp.devices) {
+      return resp.devices;
     } else {
       return [];
     }
@@ -37,7 +52,7 @@ export class KentikAPI {
     try {
       const requiresAdminLevel = true;
       const resp = await this._get('/api/v5/customdimensions', requiresAdminLevel);
-      return resp.data.customDimensions;
+      return resp.customDimensions;
     } catch (e) {
       if (e.status === 403) {
         return [];
@@ -48,7 +63,7 @@ export class KentikAPI {
 
   async getSavedFilters(): Promise<any> {
     const data = await this._get('/api/v5/saved-filters');
-    return data.data;
+    return data;
   }
 
   async invokeTopXDataQuery(query: any): Promise<any> {
@@ -69,10 +84,9 @@ export class KentikAPI {
 
   private async _get(url: string, requiresAdminLevel = false): Promise<any> {
     try {
-      const resp = await this.$http({
-        method: 'GET',
-        url: this.baseUrl + url,
-      });
+      const resp = await this.backendSrv.request(
+        { method: 'GET', url: this.baseUrl + url,  showErrorAlert: !requiresAdminLevel }
+      );
 
       return resp;
     } catch (error) {
@@ -89,14 +103,35 @@ export class KentikAPI {
 
   private async _post(url: string, data: any): Promise<any> {
     try {
-      const resp = await this.$http({
-        method: 'POST',
-        url: this.baseUrl + url,
-        data: data,
-      });
+      const resp = await this.backendSrv.post(
+        this.baseUrl + url,
+        data,
+      );
 
-      if (resp.data) {
-        return resp.data;
+      if (resp) {
+        return resp;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      showAlert(error);
+      if (error.err) {
+        throw error.err;
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  private async _put(url: string, data: any): Promise<any> {
+    try {
+      const resp = await this.backendSrv.put(
+        this.baseUrl + url,
+        data,
+      );
+
+      if (resp) {
+        return resp;
       } else {
         return [];
       }

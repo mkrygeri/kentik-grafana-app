@@ -98,7 +98,7 @@ class KentikConfigCtrl {
     this.$scope.$digest();
   }
 
-  reset() {
+  reset(): void {
     this.appModel.jsonData.email = '';
     this.appModel.jsonData.tokenSet = false;
     this.appModel.jsonData.region = Region.DEFAULT;
