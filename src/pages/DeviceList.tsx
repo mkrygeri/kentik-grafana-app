@@ -71,7 +71,7 @@ export const DeviceList: FC<AppRootProps> = ({ query, path, meta }) => {
                   <div>
                     <i className="icon icon-gf icon-gf-endpoint-tiny no-endpoints"></i>
                     <p>Looks like you don’t have any devices yet.<br />
-                      <a className="highlight-word" href="/a/kentik-connect-app?tab=add-device">Add a new device</a>
+                      {/* <a className="highlight-word" href="/a/kentik-connect-app?tab=add-device">Add a new device</a> */}
                     </p>
                   </div>
                   <a onClick={onDeviceDescClick}>
@@ -126,7 +126,7 @@ export const DeviceList: FC<AppRootProps> = ({ query, path, meta }) => {
                       </div>
                       <div className="card-item-body">
                         <div className="card-item-details">
-                          <a onClick={(event) => event.stopPropagation()} href="/d/NS58GIo71/kentik-top-talkers?var-device={{device.device_name}}">
+                          <a onClick={(event) => event.stopPropagation()} href={`/d/NS58GIo71/kentik-top-talkers?var-device=${device.device_name}`}>
                             <div className="card-item-name">
                               { device.device_name }
                             </div>
