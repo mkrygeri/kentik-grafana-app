@@ -98,41 +98,6 @@ jobs:
             sudo npm install -g jest
             npm test
 
-  publish_github_release:
-    <<: *defaults
-    docker:
-      - image: cibuilds/github:0.12
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "b7:0b:7a:ce:3d:ef:22:1c:cd:97:7f:33:93:e6:db:fe"
-      - attach_workspace:
-          at: .
-      - run:
-          name: "Publish Release on GitHub"
-          command: |
-            apk add --update --no-cache jq
-            RELEASE_NOTES=`awk '/## \[/{if(flag){exit};flag=1;}flag' CHANGELOG.md`
-            VERSION=`cat dist/plugin.json|jq '.info.version'| sed s/\"//g`
-            git config user.email "dev@corpglory.com"
-            git config user.name "CircleCI"
-            git checkout -b release-${VERSION}
-            git add --force dist/
-            git commit -m "automated release $VERSION [skip ci]"
-            git push -f origin release-${VERSION}
-            git tag -f v${VERSION}
-            git push -f origin v${VERSION}
-            ghr \
-              -t ${GITHUB_TOKEN} \
-              -u ${CIRCLE_PROJECT_USERNAME} \
-              -r ${CIRCLE_PROJECT_REPONAME} \
-              -c ${CIRCLE_SHA1} \
-              -n "v${VERSION}" \
-              -b "${RELEASE_NOTES}" \
-              v${VERSION} \
-              ./artifacts/
-
 workflows:
   version: 2
   build-master:
@@ -146,15 +111,6 @@ workflows:
       - build:
           requires:
             - test
-          filters: *filter-only-master
-      - hold:
-          type: approval
-          requires:
-            - build
-          filters: *filter-only-master
-      - publish_github_release:
-          requires:
-            - hold
           filters: *filter-only-master
 
   build-branches-and-prs:
