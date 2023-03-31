@@ -11,6 +11,7 @@
     "declaration": false,
     "allowSyntheticDefaultImports": true,
     "inlineSourceMap": false,
+    "inlineSources": true,
     "sourceMap": true,
     "noEmitOnError": false,
     "noImplicitReturns": true,
