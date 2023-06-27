@@ -1,7 +1,7 @@
 {
   "name": "kentik-connect-app",
   "private": false,
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Kentik Connect for Grafana allows you to quickly and easily enhance your visibility into your network traffic.",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
@@ -22,6 +22,7 @@
     "@grafana/data": "^8.5.1",
     "@grafana/runtime": "^8.5.1",
     "@grafana/toolkit": "^8.5.1",
+    "@grafana/ui": "^8.5.1",
     "@types/angular": "^1.6.54",
     "@types/grafana": "github:CorpGlory/types-grafana",
     "@types/lodash": "^4.14.144",
