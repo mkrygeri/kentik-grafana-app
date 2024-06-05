@@ -19,10 +19,7 @@ import { DataSourceWithBackend, getTemplateSrv, TemplateSrv, getBackendSrv } fro
 
 import * as _ from 'lodash';
 
-export class DataSource extends DataSourceWithBackend<MyQuery, MyDataSourceOptions> {
-  constructor(instanceSettings: DataSourceInstanceSettings<MyDataSourceOptions>) {
-    super(instanceSettings);
-  }
+
   
 export type CustomFilter = {
   conjunctionOperator: string;
@@ -68,7 +65,7 @@ export const DEFAULT_QUERY = {
 
 export interface MyDataSourceOptions extends DataSourceJsonData {}
 
-export class KentikDataSource extends DataSourceApi<KentikQuery, MyDataSourceOptions> {
+export class KentikDataSource extends DataSourceWithBackend<KentikQuery, MyDataSourceOptions> {
   datasourceType: string;
   kentik: any;
   templateSrv: TemplateSrv;
