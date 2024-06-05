@@ -1,7 +1,6 @@
 import queryBuilder from './query_builder';
 import { CoreApp, DataSourceInstanceSettings } from '@grafana/data';
 import { MyQuery, MyDataSourceOptions } from './types';
-import { DataSourceWithBackend, getTemplateSrv } from '@grafana/runtime';
 import { metricList, unitList, filterFieldList, Metric, Unit, FilterField } from './metric_def';
 import { KentikAPI } from './kentik_api';
 import { KentikProxy } from './kentik_proxy';
@@ -17,7 +16,7 @@ import {
   DataQueryResponse,
   VariableModel,
 } from '@grafana/data';
-import { getTemplateSrv, TemplateSrv, getBackendSrv } from '@grafana/runtime';
+import { DataSourceWithBackend, getTemplateSrv, TemplateSrv, getBackendSrv } from '@grafana/runtime';
 
 import * as _ from 'lodash';
 
