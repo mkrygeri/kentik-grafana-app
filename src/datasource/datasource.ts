@@ -1,5 +1,5 @@
 import queryBuilder from './query_builder';
-import { MyQuery} from './types';
+//import { MyQuery} from './types';
 import { metricList, unitList, filterFieldList, Metric, Unit, FilterField } from './metric_def';
 import { KentikAPI } from './kentik_api';
 import { KentikProxy } from './kentik_proxy';
