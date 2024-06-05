@@ -1,5 +1,5 @@
 import queryBuilder from './query_builder';
-//import { MyQuery, MyDataSourceOptions } from './types';
+import { MyQuery, MyDataSourceOptions } from './types';
 import { metricList, unitList, filterFieldList, Metric, Unit, FilterField } from './metric_def';
 import { KentikAPI } from './kentik_api';
 import { KentikProxy } from './kentik_proxy';
@@ -66,7 +66,7 @@ export const DEFAULT_QUERY = {
   conjunctionOperator: ConjunctionOperator.AND,
 };
 
-export interface MyDataSourceOptions extends DataSourceJsonData {}
+//export interface MyDataSourceOptions extends DataSourceJsonData {}
 
 export class KentikDataSource extends DataSourceApi<KentikQuery, MyDataSourceOptions> {
   datasourceType: string;
