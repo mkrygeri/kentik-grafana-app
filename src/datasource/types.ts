@@ -4,4 +4,4 @@ export interface MyQuery extends DataQuery {
   multiplier: number;
 }
 
-export interface MyDataSourceOptions extends DataSourceJsonData {}
+//export interface MyDataSourceOptions extends DataSourceJsonData {}
