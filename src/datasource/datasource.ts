@@ -1,5 +1,4 @@
 import queryBuilder from './query_builder';
-import { CoreApp, DataSourceInstanceSettings } from '@grafana/data';
 import { MyQuery, MyDataSourceOptions } from './types';
 import { metricList, unitList, filterFieldList, Metric, Unit, FilterField } from './metric_def';
 import { KentikAPI } from './kentik_api';
