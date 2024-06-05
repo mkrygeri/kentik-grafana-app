@@ -1,4 +1,5 @@
 import queryBuilder from './query_builder';
+import { DataSourceWithBackend, getTemplateSrv } from '@grafana/runtime';
 import { metricList, unitList, filterFieldList, Metric, Unit, FilterField } from './metric_def';
 import { KentikAPI } from './kentik_api';
 import { KentikProxy } from './kentik_proxy';
@@ -18,6 +19,11 @@ import { getTemplateSrv, TemplateSrv, getBackendSrv } from '@grafana/runtime';
 
 import * as _ from 'lodash';
 
+export class DataSource extends DataSourceWithBackend<MyQuery, MyDataSourceOptions> {
+  constructor(instanceSettings: DataSourceInstanceSettings<MyDataSourceOptions>) {
+    super(instanceSettings);
+  }
+  
 export type CustomFilter = {
   conjunctionOperator: string;
   operatorSegment: string;
